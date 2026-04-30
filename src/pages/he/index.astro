@@ -1,31 +1,10 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import { listAllSites } from '@/lib/data';
 import { t } from '@/lib/strings';
 
 const locale = 'he' as const;
-
-let sites: Array<any> = [];
-try {
-  const fs = await import('node:fs');
-  const path = await import('node:path');
-  const url = await import('node:url');
-  const here = path.dirname(url.fileURLToPath(import.meta.url));
-  // we sit at src/pages/he/index.astro → public/sites is ../../../public/sites
-  const sitesDir = path.resolve(here, '../../../public/sites');
-  if (fs.existsSync(sitesDir)) {
-    for (const slug of fs.readdirSync(sitesDir).sort()) {
-      const enFile = path.join(sitesDir, slug, 'site.json');
-      if (!fs.existsSync(enFile)) continue;
-      const en = JSON.parse(fs.readFileSync(enFile, 'utf-8'));
-      const heFile = path.join(sitesDir, slug, 'site.he.json');
-      const he = fs.existsSync(heFile) ? JSON.parse(fs.readFileSync(heFile, 'utf-8')) : {};
-      sites.push({ slug, ...en, ...he });
-    }
-  }
-} catch (e) {
-  console.warn('No sites discovered yet:', e);
-}
-
+const sites = listAllSites(locale);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 

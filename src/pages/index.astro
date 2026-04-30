@@ -1,32 +1,9 @@
 ---
 // Home / site picker — currently 1 site, future-ready
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import { listAllSites } from '@/lib/data';
 
-// Statically import the site index. As more sites land in public/sites/<slug>/site.json
-// they get listed here. For now we hard-code the templer site presence and let the
-// build fail loudly if it's missing.
-let sites: Array<any> = [];
-try {
-  // dynamic require via Astro's import.meta.glob — picks up any site.json in public/
-  // (Astro doesn't expose public/ at build time, so we read from the project at build)
-  const fs = await import('node:fs');
-  const path = await import('node:path');
-  const url = await import('node:url');
-  const here = path.dirname(url.fileURLToPath(import.meta.url));
-  const sitesDir = path.resolve(here, '../../public/sites');
-  if (fs.existsSync(sitesDir)) {
-    for (const slug of fs.readdirSync(sitesDir).sort()) {
-      const p = path.join(sitesDir, slug, 'site.json');
-      if (fs.existsSync(p)) {
-        const data = JSON.parse(fs.readFileSync(p, 'utf-8'));
-        sites.push({ slug, ...data });
-      }
-    }
-  }
-} catch (e) {
-  console.warn('No sites discovered yet:', e);
-}
-
+const sites = listAllSites('en');
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
