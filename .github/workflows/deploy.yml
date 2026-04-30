@@ -1,0 +1,62 @@
+name: Deploy to GitHub Pages
+
+on:
+  # Trigger on every push to main
+  push:
+    branches: [main]
+  # Allow manual trigger from the Actions tab
+  workflow_dispatch:
+
+# Required for GitHub Pages deployment via the official action
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one in-flight deployment per branch
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build static site
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        # --legacy-peer-deps because @astrojs/react@4.x peer-checks are stricter than necessary
+        run: npm install --legacy-peer-deps --no-audit
+
+      - name: Build Astro site
+        # `astro.config.mjs` already sets `base: '/lichen-atlas'` for the canonical
+        # deploy at https://maayanmag.github.io/lichen-atlas/
+        run: npm run build
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
