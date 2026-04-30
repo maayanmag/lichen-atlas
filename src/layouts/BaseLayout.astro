@@ -4,6 +4,8 @@ import '@/styles/global.css';
 import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
 import WipBanner from '@/components/WipBanner.astro';
+import { dirFor, htmlLangFor, pathInOtherLocale, type Locale } from '@/lib/i18n';
+import { t } from '@/lib/strings';
 
 interface Props {
   title?: string;
@@ -14,23 +16,43 @@ interface Props {
   transparentHeader?: boolean;
   /** When true, removes the default page padding so children can go full-bleed */
   bleed?: boolean;
+  /** UI locale for this page */
+  locale?: Locale;
 }
 
 const {
-  title = 'Lichen Atlas',
-  description = 'A field-research atlas of lichens colonizing historical cemeteries — Maayan Magenheim, Bezalel Bio-Design.',
+  title,
+  description,
   currentSite = null,
   transparentHeader = false,
   bleed = false,
+  locale = 'en',
 } = Astro.props;
+
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const brand = t('brand.title', locale);
+const fallbackDesc = locale === 'he'
+  ? 'אטלס מחקר-שדה של חזזיות המתיישבות על מצבות בבתי קברות היסטוריים — מעיין מגנהיים, ביו-דיזיין בצלאל.'
+  : 'A field-research atlas of lichens colonizing historical cemeteries — Maayan Magenheim, Bezalel Bio-Design.';
+const resolvedDescription = description ?? fallbackDesc;
+const resolvedTitle = title ?? brand;
+const docTitle = resolvedTitle === brand ? brand : `${resolvedTitle} — ${brand}`;
+
+const altHref = `${baseUrl}${pathInOtherLocale(Astro.url, baseUrl).slice(baseUrl.length)}`;
+const altLang = locale === 'he' ? 'en' : 'he';
+
+const dir = dirFor(locale);
+const htmlLang = htmlLangFor(locale);
+const bodyFontClass = locale === 'he' ? 'font-hebrew' : 'font-sans';
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={htmlLang} dir={dir}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="description" content={description} />
+    <meta name="description" content={resolvedDescription} />
     <meta name="theme-color" content="#0F1115" />
     <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}/favicon.svg`} />
 
@@ -42,23 +64,30 @@ const {
       href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Frank+Ruhl+Libre:wght@400;500;700&family=UnifrakturMaguntia&display=swap"
     />
 
-    <title>{title === 'Lichen Atlas' ? title : `${title} — Lichen Atlas`}</title>
+    <title>{docTitle}</title>
+
+    <!-- Locale alternate -->
+    <link rel="alternate" hreflang={altLang} href={altHref} />
+    <link rel="alternate" hreflang={htmlLang} href={Astro.url.href} />
 
     <meta property="og:type" content="website" />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
+    <meta property="og:title" content={resolvedTitle} />
+    <meta property="og:description" content={resolvedDescription} />
+    <meta property="og:locale" content={locale === 'he' ? 'he_IL' : 'en_US'} />
+    <meta property="og:locale:alternate" content={locale === 'he' ? 'en_US' : 'he_IL'} />
 
     <slot name="head" />
   </head>
 
-  <body class="min-h-screen flex flex-col bg-slate-850 text-bone-100">
-    <WipBanner />
-    <Header currentSite={currentSite} transparent={transparentHeader} />
+  <body class={`min-h-screen flex flex-col bg-slate-850 text-bone-100 ${bodyFontClass}`}>
+    <WipBanner locale={locale} />
+    <Header currentSite={currentSite} transparent={transparentHeader} locale={locale} />
 
     <main class={`flex-1 ${bleed ? '' : 'px-4 md:px-8 py-8'}`}>
       <slot />
     </main>
 
-    <Footer />
+    <Footer locale={locale} />
   </body>
 </html>
+

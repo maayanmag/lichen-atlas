@@ -2,6 +2,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import StratigraphyExplorer from '@/components/StratigraphyExplorer.tsx';
 import { listSiteSlugs, loadSite, loadStones } from '@/lib/data';
+import { EXPLORER_KEYS, tBag } from '@/lib/strings';
 
 export async function getStaticPaths() {
   const paths = [];
@@ -19,6 +20,7 @@ const site = loadSite(slug as string);
 const stones = loadStones(slug as string);
 const stone = stones.find(s => s.folder === stoneFolder);
 const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+const tStrings = tBag(EXPLORER_KEYS, 'en');
 
 if (!stone) throw new Error(`Stone not found: ${stoneFolder}`);
 
@@ -33,5 +35,6 @@ const personLabel = stone.is_unknown
   currentSite={{ slug: site.slug, name: site.name }}
   bleed
 >
-  <StratigraphyExplorer client:load site={site} stones={stones} baseUrl={baseUrl} initialStone={stone.folder} />
+  <StratigraphyExplorer client:load site={site} stones={stones} baseUrl={baseUrl} initialStone={stone.folder} locale="en" t={tStrings} />
 </BaseLayout>
+

@@ -1,11 +1,22 @@
 ---
-// Header — quiet top bar with brand + site context
+// Header — quiet top bar with brand + site context + EN | עברית switcher.
+import { pathInOtherLocale, type Locale } from '@/lib/i18n';
+import { t } from '@/lib/strings';
+
 interface Props {
   currentSite?: { slug: string; name: string } | null;
   transparent?: boolean;
+  locale?: Locale;
 }
-const { currentSite = null, transparent = false } = Astro.props;
+const { currentSite = null, transparent = false, locale = 'en' } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const home = locale === 'he' ? `${base}/he/` : `${base}/`;
+const lichensHref = locale === 'he' ? `${base}/he/lichens` : `${base}/lichens`;
+const aboutHref = locale === 'he' ? `${base}/he/about` : `${base}/about`;
+const otherPath = pathInOtherLocale(Astro.url, base);
+const siteHref = currentSite
+  ? (locale === 'he' ? `${base}/he/sites/${currentSite.slug}/` : `${base}/sites/${currentSite.slug}/`)
+  : null;
 ---
 
 <header
@@ -16,7 +27,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 >
   <div class="max-w-page mx-auto flex items-center justify-between px-4 md:px-8 h-16">
     <!-- Brand -->
-    <a href={`${base}/`} class="group flex items-center gap-3">
+    <a href={home} class="group flex items-center gap-3">
       <!-- Tiny mark: a fragment of placodioid rosette -->
       <svg width="28" height="28" viewBox="0 0 28 28" class="text-ember" aria-hidden="true">
         <circle cx="14" cy="14" r="11" fill="none" stroke="currentColor" stroke-width="0.7" opacity="0.4"/>
@@ -34,21 +45,43 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         </g>
       </svg>
       <div class="flex flex-col leading-none">
-        <span class="font-serif text-lg tracking-tight text-bone-50 group-hover:text-ember transition-colors">Lichen Atlas</span>
-        <span class="text-[10px] uppercase tracking-[0.18em] text-slate-600">field documentation · Bezalel</span>
+        <span class="font-serif text-lg tracking-tight text-bone-50 group-hover:text-ember transition-colors">{t('brand.title', locale)}</span>
+        <span class="text-[10px] uppercase tracking-[0.18em] text-slate-600">{t('brand.subtitle', locale)}</span>
       </div>
     </a>
 
-    <!-- Right: site context + nav -->
+    <!-- Right: site context + nav + lang switcher -->
     <nav class="flex items-center gap-2 md:gap-4 text-sm text-bone-200">
-      {currentSite && (
+      {currentSite && siteHref && (
         <span class="hidden md:inline text-slate-600">·</span>
-        <a href={`${base}/sites/${currentSite.slug}/`} class="hidden md:inline text-bone-200 hover:text-ember">
+        <a href={siteHref} class="hidden md:inline text-bone-200 hover:text-ember">
           {currentSite.name}
         </a>
       )}
-      <a href={`${base}/lichens`} class="hidden sm:inline px-2 py-1 rounded hover:text-ember">Lichens</a>
-      <a href={`${base}/about`}    class="hidden sm:inline px-2 py-1 rounded hover:text-ember">About</a>
+      <a href={lichensHref} class="hidden sm:inline px-2 py-1 rounded hover:text-ember">{t('nav.lichens', locale)}</a>
+      <a href={aboutHref}    class="hidden sm:inline px-2 py-1 rounded hover:text-ember">{t('nav.about', locale)}</a>
+
+      <!-- Language switcher: EN | עברית -->
+      <div class="flex items-center gap-1 ms-1 ps-2 border-s border-slate-700/40 text-xs" role="group" aria-label={t('switcher.aria', locale)}>
+        <a
+          href={locale === 'en' ? '#' : otherPath}
+          aria-current={locale === 'en' ? 'page' : undefined}
+          class:list={[
+            'px-1.5 py-0.5 rounded uppercase tracking-wider',
+            locale === 'en' ? 'text-ember' : 'text-bone-300 hover:text-ember',
+          ]}
+        >EN</a>
+        <span class="text-slate-700" aria-hidden="true">|</span>
+        <a
+          href={locale === 'he' ? '#' : otherPath}
+          aria-current={locale === 'he' ? 'page' : undefined}
+          class:list={[
+            'px-1.5 py-0.5 rounded font-hebrew text-sm',
+            locale === 'he' ? 'text-ember' : 'text-bone-300 hover:text-ember',
+          ]}
+        >עברית</a>
+      </div>
     </nav>
   </div>
 </header>
+

@@ -1,4 +1,8 @@
 ---
+import { type Locale } from '@/lib/i18n';
+import { t } from '@/lib/strings';
+interface Props { locale?: Locale }
+const { locale = 'en' } = Astro.props;
 const dismissible = true;
 ---
 
@@ -7,8 +11,8 @@ const dismissible = true;
      class="bg-amber-950/40 border-b border-amber-800/40 text-amber-200 text-xs">
   <div class="max-w-page mx-auto px-4 md:px-8 py-2 flex items-center justify-between gap-4">
     <p class="leading-snug">
-      <span class="uppercase tracking-[0.2em] font-medium mr-2">🚧 WIP</span>
-      <span class="text-amber-300/90">Early prototype · AI-assisted documentation · biographies and lichen IDs are working hypotheses pending verification against printed sources.</span>
+      <span class="uppercase tracking-[0.2em] font-medium me-2">🚧 {t('wip.label', locale)}</span>
+      <span class="text-amber-300/90">{t('wip.body', locale)}</span>
     </p>
     {dismissible && (
       <button id="wip-banner-close" class="shrink-0 text-amber-300/70 hover:text-amber-200 px-2 py-0.5 rounded">×</button>
@@ -22,11 +26,13 @@ const dismissible = true;
       var b = document.getElementById('wip-banner');
       var c = document.getElementById('wip-banner-close');
       if (!b || !c) return;
-      try { if (localStorage.getItem('wip-banner-dismissed') === '1') b.style.display = 'none'; } catch(e){}
+      var KEY = 'wip-banner-dismissed-v2';
+      try { if (localStorage.getItem(KEY) === '1') b.style.display = 'none'; } catch(e){}
       c.addEventListener('click', function() {
         b.style.display = 'none';
-        try { localStorage.setItem('wip-banner-dismissed', '1'); } catch(e){}
+        try { localStorage.setItem(KEY, '1'); } catch(e){}
       });
     })();
   </script>
 )}
+

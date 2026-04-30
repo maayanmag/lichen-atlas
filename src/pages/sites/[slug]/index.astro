@@ -2,6 +2,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import StratigraphyExplorer from '@/components/StratigraphyExplorer.tsx';
 import { listSiteSlugs, loadSite, loadStones } from '@/lib/data';
+import { EXPLORER_KEYS, tBag } from '@/lib/strings';
 
 export async function getStaticPaths() {
   return listSiteSlugs().map(slug => ({ params: { slug } }));
@@ -11,6 +12,7 @@ const { slug } = Astro.params;
 const site = loadSite(slug as string);
 const stones = loadStones(slug as string);
 const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+const tStrings = tBag(EXPLORER_KEYS, 'en');
 ---
 
 <BaseLayout
@@ -57,5 +59,6 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
     )}
   </section>
 
-  <StratigraphyExplorer client:load site={site} stones={stones} baseUrl={baseUrl} />
+  <StratigraphyExplorer client:load site={site} stones={stones} baseUrl={baseUrl} locale="en" t={tStrings} />
 </BaseLayout>
+

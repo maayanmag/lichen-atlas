@@ -1,7 +1,9 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import type { Site, Stone, BioConfidence } from '@/lib/types';
-import { coverageFraction, genusColor, genusInfo, LICHEN_PALETTE } from '@/lib/lichens';
+import { coverageFraction, genusColor, genusInfo } from '@/lib/lichens';
 import { renderDetails } from '@/lib/markdown';
+
+type Locale = 'en' | 'he';
 
 interface Props {
   site: Site;
@@ -9,24 +11,27 @@ interface Props {
   baseUrl: string;
   /** Stone folder to pre-select (from URL) */
   initialStone?: string | null;
+  /** UI locale */
+  locale?: Locale;
+  /** Pre-resolved string bag from src/lib/strings.ts */
+  t: Record<string, string>;
 }
 
 type SortKey = 'chronological' | 'coverage' | 'surname' | 'age';
-
-const CONFIDENCE_ORDER: Record<BioConfidence, number> = { high: 0, medium: 1, low: 2, unknown: 3 };
 
 function photoSrc(slug: string, fname: string, size: 'thumb' | 'medium' | 'large', base: string): string {
   return `${base}/sites/${slug}/photos/${size}/${fname}`;
 }
 
-export default function StratigraphyExplorer({ site, stones, baseUrl, initialStone = null }: Props) {
+export default function StratigraphyExplorer({ site, stones, baseUrl, initialStone = null, locale = 'en', t }: Props) {
+  const isHe = locale === 'he';
   const [selected, setSelected] = useState<string | null>(initialStone ?? stones[0]?.folder ?? null);
   const [sortBy, setSortBy] = useState<SortKey>('chronological');
   const [filterGenus, setFilterGenus] = useState<string | null>(null);
   const [confidenceFilter, setConfidenceFilter] = useState<Set<BioConfidence>>(new Set(['high','medium','low','unknown']));
   const [photoIdx, setPhotoIdx] = useState(0);
   const [tab, setTab] = useState<'inscription' | 'biography' | 'lichens' | 'photos'>('inscription');
-  const [lang, setLang] = useState<'en' | 'he' | 'de'>('en');
+  const [lang, setLang] = useState<'en' | 'he' | 'de'>(isHe ? 'he' : 'en');
 
   // Hash-driven deep linking
   useEffect(() => {
@@ -108,20 +113,28 @@ export default function StratigraphyExplorer({ site, stones, baseUrl, initialSto
     return () => window.removeEventListener('keydown', onKey);
   }, [sortedStones, selectedStone]);
 
+  // Confidence labels (translated)
+  const confLabel: Record<BioConfidence, string> = {
+    high: t['explorer.confidence.high'],
+    medium: t['explorer.confidence.medium'],
+    low: t['explorer.confidence.low'],
+    unknown: t['explorer.confidence.unknown'],
+  };
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-[minmax(380px,440px)_1fr] gap-0 min-h-[calc(100vh-4rem)]">
       {/* ============= LEFT: Stratigraphy ============= */}
-      <aside className="border-r border-slate-700/40 bg-slate-850/60">
+      <aside className={`${isHe ? 'border-l border-r-0' : 'border-r'} border-slate-700/40 bg-slate-850/60`}>
         {/* Sort + filter chips */}
         <div className="sticky top-16 z-30 bg-slate-850/95 backdrop-blur border-b border-slate-700/40 p-4">
           {/* Sort */}
           <div className="flex items-center gap-1 text-xs mb-3">
-            <span className="text-slate-600 mr-2 uppercase tracking-wider">Sort</span>
+            <span className="text-slate-600 me-2 uppercase tracking-wider">{t['explorer.sort.label']}</span>
             {([
-              ['chronological', 'Chronological'],
-              ['coverage', 'Coverage'],
-              ['age', 'Age'],
-              ['surname', 'A → Z'],
+              ['chronological', t['explorer.sort.chronological']],
+              ['coverage',      t['explorer.sort.coverage']],
+              ['age',           t['explorer.sort.age']],
+              ['surname',       t['explorer.sort.surname']],
             ] as const).map(([k, label]) => (
               <button
                 key={k}
@@ -135,19 +148,19 @@ export default function StratigraphyExplorer({ site, stones, baseUrl, initialSto
 
           {/* Genus filter chips */}
           <div className="flex items-center gap-1.5 flex-wrap text-xs">
-            <span className="text-slate-600 mr-1 uppercase tracking-wider">Lichen</span>
+            <span className="text-slate-600 me-1 uppercase tracking-wider">{t['explorer.filter.lichen']}</span>
             <button
               onClick={() => setFilterGenus(null)}
               className={`px-2 py-1 rounded transition-colors ${filterGenus == null ? 'bg-slate-700/60 text-bone-100' : 'text-bone-300 hover:bg-slate-700/40'}`}
             >
-              all
+              {t['explorer.filter.all']}
             </button>
             {site.lichen_genera.slice(0, 6).map(({ genus }) => (
               <button
                 key={genus}
                 onClick={() => setFilterGenus(filterGenus === genus ? null : genus)}
                 className={`flex items-center gap-1 px-2 py-1 rounded transition-all ${filterGenus === genus ? 'bg-slate-700/60 ring-1 ring-bone-300/30' : 'hover:bg-slate-700/30'}`}
-                title={genusInfo(genus).description}
+                title={genusInfo(genus, locale).description}
               >
                 <span className="lichen-dot" style={{ background: genusColor(genus) }} />
                 <span className="text-bone-200 italic">{genus}</span>
@@ -157,7 +170,7 @@ export default function StratigraphyExplorer({ site, stones, baseUrl, initialSto
 
           {/* Confidence filter */}
           <div className="flex items-center gap-1.5 flex-wrap text-[11px] mt-2">
-            <span className="text-slate-600 mr-1 uppercase tracking-wider">Confidence</span>
+            <span className="text-slate-600 me-1 uppercase tracking-wider">{t['explorer.confidence.label']}</span>
             {(['high','medium','low','unknown'] as const).map(level => (
               <button
                 key={level}
@@ -169,7 +182,7 @@ export default function StratigraphyExplorer({ site, stones, baseUrl, initialSto
                 }}
                 className={`px-1.5 py-0.5 rounded transition-colors ${confidenceFilter.has(level) ? 'bg-slate-700/60 text-bone-100' : 'text-slate-600 line-through'}`}
               >
-                {level}
+                {confLabel[level]}
               </button>
             ))}
           </div>
@@ -177,25 +190,29 @@ export default function StratigraphyExplorer({ site, stones, baseUrl, initialSto
 
         {/* The stratigraphy itself */}
         <div className="py-3">
-          {sortedStones.map((stone, i) => {
+          {sortedStones.map((stone) => {
             const isActive = selectedStone?.folder === stone.folder;
             const dim = isDimmed(stone);
             const fillFrac = coverageFraction(stone.lichen_coverage_low, stone.lichen_coverage_high);
             const dominant = stone.lichen_dominant?.split(' ')[0] ?? stone.lichen_genera[0];
             const tintColor = dominant ? genusColor(dominant) : '#444';
+            const gradientDir = isHe ? 'to left' : 'to right';
+            const borderSide = isHe
+              ? { borderRight: `2px solid ${tintColor}`, borderLeft: 'none' }
+              : { borderLeft:  `2px solid ${tintColor}`, borderRight: 'none' };
             return (
               <button
                 key={stone.folder}
                 onClick={() => setSelected(stone.folder)}
-                className={`stratum w-full text-left px-4 py-2.5 group relative ${isActive ? 'is-active' : ''} ${dim ? 'opacity-30' : ''}`}
+                className={`stratum w-full text-start px-4 py-2.5 group relative ${isActive ? 'is-active' : ''} ${dim ? 'opacity-30' : ''}`}
               >
-                {/* Coverage bar (background) */}
+                {/* Coverage bar (background) — anchors to the start edge in both LTR and RTL */}
                 <div
-                  className="absolute inset-y-1.5 left-4 rounded-r-sm transition-all"
+                  className={`absolute inset-y-1.5 ${isHe ? 'right-4 rounded-l-sm' : 'left-4 rounded-r-sm'} transition-all`}
                   style={{
                     width: `calc(${fillFrac * 100}% - 1rem)`,
-                    background: `linear-gradient(to right, ${tintColor}55 0%, ${tintColor}15 80%, transparent 100%)`,
-                    borderLeft: `2px solid ${tintColor}`,
+                    background: `linear-gradient(${gradientDir}, ${tintColor}55 0%, ${tintColor}15 80%, transparent 100%)`,
+                    ...borderSide,
                   }}
                   aria-hidden="true"
                 />
@@ -208,12 +225,12 @@ export default function StratigraphyExplorer({ site, stones, baseUrl, initialSto
                       </span>
                       <span className={`text-sm font-medium truncate ${isActive ? 'text-bone-50' : 'text-bone-200'}`}>
                         {stone.is_unknown
-                          ? <span className="italic text-bone-300">Unknown stone</span>
+                          ? <span className="italic text-bone-300">{t['explorer.unknownStone']}</span>
                           : (stone.surname ? `${stone.surname}, ${stone.given_names || ''}`.replace(/, $/, '') : stone.folder)}
                       </span>
                     </div>
-                    <div className="mt-0.5 flex items-center gap-2 pl-14 text-[11px] text-slate-600">
-                      <span>{stone.stone_age_2026 != null ? `${stone.stone_age_2026}y` : '—'}</span>
+                    <div className="mt-0.5 flex items-center gap-2 ps-14 text-[11px] text-slate-600">
+                      <span>{stone.stone_age_2026 != null ? `${stone.stone_age_2026}${isHe ? ' ' + t['site.dl.years.suffix'] : 'y'}` : '—'}</span>
                       <span className="text-slate-700">·</span>
                       <span>{stone.lichen_coverage_label || '—'}</span>
                       <span className="text-slate-700">·</span>
@@ -232,9 +249,11 @@ export default function StratigraphyExplorer({ site, stones, baseUrl, initialSto
 
         {/* Bottom biodiversity bar */}
         <div className="sticky bottom-0 bg-slate-850/95 backdrop-blur border-t border-slate-700/40 px-4 py-3 z-30">
-          <div className="text-[10px] uppercase tracking-wider text-slate-600 mb-1.5">Biodiversity in current view ({visibleStones.length} stones)</div>
+          <div className="text-[10px] uppercase tracking-wider text-slate-600 mb-1.5">
+            {t['explorer.biodiversity.label']} ({visibleStones.length} {t['explorer.biodiversity.stones']})
+          </div>
           <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs">
-            {genusBreakdown.length === 0 && <span className="text-slate-600">none</span>}
+            {genusBreakdown.length === 0 && <span className="text-slate-600">{t['explorer.biodiversity.none']}</span>}
             {genusBreakdown.map(([g, n]) => (
               <span key={g} className="inline-flex items-center gap-1.5">
                 <span className="lichen-dot" style={{ background: genusColor(g) }} />
@@ -248,7 +267,9 @@ export default function StratigraphyExplorer({ site, stones, baseUrl, initialSto
 
       {/* ============= RIGHT: Detail pane ============= */}
       <section className="overflow-y-auto">
-        {selectedStone ? <DetailPane stone={selectedStone} site={site} baseUrl={baseUrl} photoIdx={photoIdx} setPhotoIdx={setPhotoIdx} tab={tab} setTab={setTab} lang={lang} setLang={setLang} /> : <EmptyState />}
+        {selectedStone
+          ? <DetailPane stone={selectedStone} site={site} baseUrl={baseUrl} photoIdx={photoIdx} setPhotoIdx={setPhotoIdx} tab={tab} setTab={setTab} lang={lang} setLang={setLang} locale={locale} t={t} />
+          : <EmptyState text={t['explorer.empty']} />}
       </section>
     </div>
   );
@@ -266,15 +287,30 @@ interface DetailProps {
   setTab: (t: 'inscription' | 'biography' | 'lichens' | 'photos') => void;
   lang: 'en' | 'he' | 'de';
   setLang: (l: 'en' | 'he' | 'de') => void;
+  locale: Locale;
+  t: Record<string, string>;
 }
 
-function DetailPane({ stone, site, baseUrl, photoIdx, setPhotoIdx, tab, setTab, lang, setLang }: DetailProps) {
+function DetailPane({ stone, site, baseUrl, photoIdx, setPhotoIdx, tab, setTab, lang, setLang, locale, t }: DetailProps) {
   const allPhotos = [...stone.photos.full, ...stone.photos.closeups];
   const safeIdx = Math.min(photoIdx, allPhotos.length - 1);
   const currentPhoto = allPhotos[safeIdx];
 
   // Extract specific sections from the DETAILS.md for the tabbed views
   const sections = useMemo(() => extractSections(stone.details_md), [stone.details_md]);
+
+  // Tab labels (translated; internal keys stay English)
+  const tabLabels: Record<DetailProps['tab'], string> = {
+    inscription: t['detail.tab.inscription'],
+    biography:   t['detail.tab.biography'],
+    lichens:     t['detail.tab.lichens'],
+    photos:      t['detail.tab.photos'],
+  };
+  const langLabels: Record<DetailProps['lang'], string> = {
+    en: t['detail.lang.en'],
+    de: t['detail.lang.de'],
+    he: t['detail.lang.he'],
+  };
 
   return (
     <div className="max-w-3xl mx-auto px-6 md:px-10 py-8">
@@ -285,7 +321,7 @@ function DetailPane({ stone, site, baseUrl, photoIdx, setPhotoIdx, tab, setTab, 
         </p>
         <h1 className="text-3xl md:text-4xl">
           {stone.is_unknown
-            ? <span className="text-bone-200 italic">Unknown stone</span>
+            ? <span className="text-bone-200 italic">{t['explorer.unknownStone']}</span>
             : (
               <>
                 <span className="text-bone-50">{stone.surname}</span>
@@ -294,19 +330,21 @@ function DetailPane({ stone, site, baseUrl, photoIdx, setPhotoIdx, tab, setTab, 
             )
           }
         </h1>
-        {stone.maiden_name && <p className="text-sm text-slate-600 mt-1">née {stone.maiden_name}</p>}
+        {stone.maiden_name && <p className="text-sm text-slate-600 mt-1">{t['detail.nee']} {stone.maiden_name}</p>}
         <div className="flex items-center gap-2 mt-3 text-xs flex-wrap">
-          {stone.born && <span className="text-bone-300">b. {stone.born}</span>}
+          {stone.born && <span className="text-bone-300">{t['detail.born.short']} {stone.born}</span>}
           {stone.born && stone.died && <span className="text-slate-700">·</span>}
-          {stone.died && <span className="text-bone-300">d. {stone.died}</span>}
-          {stone.age_at_death != null && <span className="text-slate-600">· age {stone.age_at_death}</span>}
+          {stone.died && <span className="text-bone-300">{t['detail.died.short']} {stone.died}</span>}
+          {stone.age_at_death != null && <span className="text-slate-600">{t['detail.age.prefix']} {stone.age_at_death}</span>}
           {stone.stone_age_2026 != null && (
             <>
               <span className="text-slate-700">·</span>
-              <span className="text-ember">stone {stone.stone_age_2026} years old</span>
+              <span className="text-ember">{t['detail.stoneAge.prefix']} {stone.stone_age_2026} {t['detail.stoneAge.suffix']}</span>
             </>
           )}
-          <span className={`confidence-pill confidence-${stone.bio_confidence}`}>{stone.bio_confidence}</span>
+          <span className={`confidence-pill confidence-${stone.bio_confidence}`}>
+            {(({high:t['explorer.confidence.high'],medium:t['explorer.confidence.medium'],low:t['explorer.confidence.low'],unknown:t['explorer.confidence.unknown']}) as Record<string,string>)[stone.bio_confidence]}
+          </span>
         </div>
       </header>
 
@@ -317,8 +355,8 @@ function DetailPane({ stone, site, baseUrl, photoIdx, setPhotoIdx, tab, setTab, 
             src={photoSrc(site.slug, currentPhoto, 'medium', baseUrl)}
             alt={
               stone.photos.full.includes(currentPhoto)
-                ? `Full gravestone of ${stone.is_unknown ? 'an unidentified stone' : (stone.surname + ' ' + stone.given_names).trim()}, photographed ${stone.died_year ? '(died ' + stone.died_year + ')' : ''}`
-                : `Close-up of lichen colonies on the ${stone.is_unknown ? 'unidentified' : stone.surname} stone — ${stone.lichen_genera.length > 0 ? 'genera observed: ' + stone.lichen_genera.join(', ') : 'lichen morphology'}`
+                ? `${stone.is_unknown ? t['explorer.unknownStone'] : (stone.surname + ' ' + stone.given_names).trim()}${stone.died_year ? ' (' + stone.died_year + ')' : ''}`
+                : `${stone.is_unknown ? t['explorer.unknownStone'] : stone.surname} — ${stone.lichen_genera.join(', ')}`
             }
             className="w-full max-h-[60vh] object-contain bg-slate-900"
             loading="eager"
@@ -326,11 +364,11 @@ function DetailPane({ stone, site, baseUrl, photoIdx, setPhotoIdx, tab, setTab, 
           {allPhotos.length > 1 && (
             <>
               <button onClick={() => setPhotoIdx((safeIdx - 1 + allPhotos.length) % allPhotos.length)}
-                      className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-900/60 backdrop-blur text-bone-100 hover:bg-slate-900/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">‹</button>
+                      className="absolute start-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-900/60 backdrop-blur text-bone-100 hover:bg-slate-900/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">‹</button>
               <button onClick={() => setPhotoIdx((safeIdx + 1) % allPhotos.length)}
-                      className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-900/60 backdrop-blur text-bone-100 hover:bg-slate-900/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">›</button>
-              <div className="absolute bottom-3 left-3 text-[10px] uppercase tracking-wider text-bone-200 bg-slate-900/70 backdrop-blur px-2 py-1 rounded">
-                {safeIdx + 1} / {allPhotos.length} · {stone.photos.full.includes(currentPhoto) ? 'full stone' : 'lichen close-up'}
+                      className="absolute end-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-900/60 backdrop-blur text-bone-100 hover:bg-slate-900/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">›</button>
+              <div className="absolute bottom-3 start-3 text-[10px] uppercase tracking-wider text-bone-200 bg-slate-900/70 backdrop-blur px-2 py-1 rounded">
+                {safeIdx + 1} / {allPhotos.length} · {stone.photos.full.includes(currentPhoto) ? t['detail.photo.full'] : t['detail.photo.closeup']}
               </div>
             </>
           )}
@@ -342,7 +380,7 @@ function DetailPane({ stone, site, baseUrl, photoIdx, setPhotoIdx, tab, setTab, 
         <div className="flex gap-2 overflow-x-auto pb-3 mb-6 -mx-2 px-2">
           {allPhotos.map((p, i) => (
             <button key={p} onClick={() => setPhotoIdx(i)}
-                    aria-label={`Show photo ${i+1} of ${allPhotos.length}: ${stone.photos.full.includes(p) ? 'full stone' : 'lichen close-up'}`}
+                    aria-label={`${i+1} / ${allPhotos.length} — ${stone.photos.full.includes(p) ? t['detail.photo.full'] : t['detail.photo.closeup']}`}
                     className={`shrink-0 w-20 h-20 rounded overflow-hidden border ${i === safeIdx ? 'border-ember' : 'border-slate-700/40 opacity-60 hover:opacity-100'}`}>
               <img src={photoSrc(site.slug, p, 'thumb', baseUrl)} alt="" className="w-full h-full object-cover" loading="lazy" />
             </button>
@@ -352,10 +390,10 @@ function DetailPane({ stone, site, baseUrl, photoIdx, setPhotoIdx, tab, setTab, 
 
       {/* Tabs */}
       <div className="flex border-b border-slate-700/40 mb-4 text-sm">
-        {(['inscription','biography','lichens','photos'] as const).map(t => (
-          <button key={t} onClick={() => setTab(t)}
-                  className={`px-4 py-2 -mb-px border-b-2 capitalize transition-colors ${tab === t ? 'border-ember text-ember' : 'border-transparent text-bone-300 hover:text-bone-100'}`}>
-            {t}
+        {(['inscription','biography','lichens','photos'] as const).map(tk => (
+          <button key={tk} onClick={() => setTab(tk)}
+                  className={`px-4 py-2 -mb-px border-b-2 transition-colors ${tab === tk ? 'border-ember text-ember' : 'border-transparent text-bone-300 hover:text-bone-100'}`}>
+            {tabLabels[tk]}
           </button>
         ))}
       </div>
@@ -364,19 +402,19 @@ function DetailPane({ stone, site, baseUrl, photoIdx, setPhotoIdx, tab, setTab, 
       <div>
         {tab === 'inscription' && (
           <div>
-            {/* Language toggle */}
+            {/* Language toggle (inscription language — independent of UI locale) */}
             <div className="flex items-center gap-1 mb-4 text-xs">
-              <span className="text-slate-600 mr-1 uppercase tracking-wider">Read in</span>
+              <span className="text-slate-600 me-1 uppercase tracking-wider">{t['detail.readIn']}</span>
               {(['en','de','he'] as const).map(l => (
                 <button key={l} onClick={() => setLang(l)}
                         className={`px-2 py-0.5 rounded ${lang === l ? 'bg-ember/15 text-ember' : 'text-bone-300 hover:bg-slate-700/40'}`}>
-                  {({en:'English',de:'Original (German)',he:'עברית'} as Record<string,string>)[l]}
+                  {langLabels[l]}
                 </button>
               ))}
             </div>
 
-            <div className={`whitespace-pre-line ${lang === 'he' ? 'font-hebrew text-right text-lg' : 'font-serif text-lg'} text-bone-100 leading-snug`}>
-              {(lang === 'de' ? sections.inscription_de : lang === 'he' ? sections.inscription_he : sections.inscription_en) || <span className="text-slate-600 italic">No transcription available.</span>}
+            <div className={`whitespace-pre-line ${lang === 'he' ? 'font-hebrew text-right text-lg' : 'font-serif text-lg'} text-bone-100 leading-snug`} dir={lang === 'he' ? 'rtl' : 'ltr'}>
+              {(lang === 'de' ? sections.inscription_de : lang === 'he' ? sections.inscription_he : sections.inscription_en) || <span className="text-slate-600 italic">{t['detail.inscription.empty']}</span>}
             </div>
             {stone.biblical_reference && (
               <p className="text-xs text-slate-600 italic mt-4">— {stone.biblical_reference}</p>
@@ -386,12 +424,12 @@ function DetailPane({ stone, site, baseUrl, photoIdx, setPhotoIdx, tab, setTab, 
 
         {tab === 'biography' && (
           <div className="prose-invert max-w-none">
-            <div dangerouslySetInnerHTML={{ __html: renderDetails(sections.biography || '_No biographical content found in DETAILS.md._') }} />
+            <div dangerouslySetInnerHTML={{ __html: renderDetails(sections.biography || t['detail.biography.empty']) }} />
             {stone.tempelgesellschaft_registry_id != null && (
               <a href={`https://www.tempelgesellschaft.de/de/geschichte/historische-friedhoefe/verzeichnis-grabstaetten.php?id=${stone.tempelgesellschaft_registry_id}&detail=1`}
                  target="_blank" rel="noopener"
                  className="inline-block mt-4 text-xs text-ember underline-offset-2 underline decoration-ember/30">
-                Tempelgesellschaft registry entry #{stone.tempelgesellschaft_registry_id} ↗
+                {t['detail.registry.entry']} #{stone.tempelgesellschaft_registry_id} ↗
               </a>
             )}
           </div>
@@ -401,7 +439,7 @@ function DetailPane({ stone, site, baseUrl, photoIdx, setPhotoIdx, tab, setTab, 
           <div>
             <div className="flex flex-wrap gap-2 mb-4">
               {stone.lichen_genera.map(g => {
-                const info = genusInfo(g);
+                const info = genusInfo(g, locale);
                 return (
                   <span key={g} className="lichen-chip" title={info.description}>
                     <span className="lichen-dot" style={{ background: info.color }} />
@@ -409,12 +447,12 @@ function DetailPane({ stone, site, baseUrl, photoIdx, setPhotoIdx, tab, setTab, 
                   </span>
                 );
               })}
-              {stone.lichen_genera.length === 0 && <span className="text-slate-600 text-sm italic">No lichen analysis recorded.</span>}
+              {stone.lichen_genera.length === 0 && <span className="text-slate-600 text-sm italic">{t['detail.lichens.empty']}</span>}
             </div>
             {stone.lichen_dominant && (
               <p className="text-sm text-bone-300 mb-3">
-                Dominant: <span className="text-bone-100 italic">{stone.lichen_dominant}</span>
-                {stone.lichen_coverage_label && <span className="text-slate-600"> · coverage {stone.lichen_coverage_label}</span>}
+                {t['detail.dominant']} <span className="text-bone-100 italic">{stone.lichen_dominant}</span>
+                {stone.lichen_coverage_label && <span className="text-slate-600"> {t['detail.coverage.prefix']} {stone.lichen_coverage_label}</span>}
               </p>
             )}
             <div className="prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: renderDetails(sections.lichens || '') }} />
@@ -434,24 +472,24 @@ function DetailPane({ stone, site, baseUrl, photoIdx, setPhotoIdx, tab, setTab, 
 
       {/* Notable callout */}
       {stone.notable && (
-        <div className="mt-8 border-l-2 border-ember/40 pl-4 py-2 text-sm text-bone-200 bg-ember/5 rounded-r-md">
-          <div className="text-[10px] uppercase tracking-wider text-ember mb-1">Notable</div>
+        <div className="mt-8 border-s-2 border-ember/40 ps-4 py-2 text-sm text-bone-200 bg-ember/5 rounded-e-md">
+          <div className="text-[10px] uppercase tracking-wider text-ember mb-1">{t['detail.notable.label']}</div>
           {stone.notable}
         </div>
       )}
 
       {/* Stone-type / verify footer */}
       <footer className="mt-8 pt-6 border-t border-slate-700/40 text-xs text-slate-600 space-y-2">
-        {stone.stone_type && <p><span className="text-bone-300">Stone:</span> {stone.stone_type}</p>}
-        <p><span className="text-bone-300">Verify:</span> Cross-reference against Eisler &amp; Gräf (2023) <em>Der historische Friedhof der Tempelgesellschaft in Jerusalem</em>.</p>
+        {stone.stone_type && <p><span className="text-bone-300">{t['detail.stone.label']}</span> {stone.stone_type}</p>}
+        <p><span className="text-bone-300">{t['detail.verify.label']}</span> {t['detail.verify.body']}</p>
         <p className="font-mono">{stone.folder}</p>
       </footer>
     </div>
   );
 }
 
-function EmptyState() {
-  return <div className="flex items-center justify-center h-full text-slate-600">Select a stone from the stratigraphy.</div>;
+function EmptyState({ text }: { text: string }) {
+  return <div className="flex items-center justify-center h-full text-slate-600">{text}</div>;
 }
 
 // ---------------------------------------------------------------- helpers
