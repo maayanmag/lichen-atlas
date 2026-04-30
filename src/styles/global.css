@@ -1,0 +1,113 @@
+/* Lichen Atlas — base styles
+ * Dark museum aesthetic. Quiet defaults so component-level Tailwind classes do the work.
+ * Fonts are loaded via <link> tags in BaseLayout for better preconnect performance.
+ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+    --grain-opacity: 0.6;
+  }
+
+  html {
+    @apply bg-slate-850 text-bone-100;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply font-sans antialiased min-h-screen;
+    /* The grain layer */
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-blend-mode: overlay;
+  }
+
+  /* Headings — editorial serif */
+  h1, h2, h3, h4 {
+    @apply font-serif;
+  }
+
+  h1 { @apply text-4xl md:text-5xl lg:text-6xl tracking-tight leading-[1.05] text-bone-50; }
+  h2 { @apply text-2xl md:text-3xl tracking-tight leading-tight text-bone-100; }
+  h3 { @apply text-xl tracking-tight leading-snug text-bone-100; }
+  h4 { @apply text-base font-medium tracking-tight text-bone-100; }
+
+  p, li { @apply leading-relaxed; }
+
+  /* Inscriptions get a special Newsreader italic look */
+  .inscription {
+    @apply font-serif text-bone-50 leading-snug whitespace-pre-line;
+    font-feature-settings: "ss01", "swsh", "cv11";
+  }
+
+  .inscription-fraktur {
+    font-family: 'UnifrakturMaguntia', 'Newsreader', serif;
+    @apply text-bone-50 leading-tight tracking-wide;
+  }
+
+  .text-hebrew {
+    font-family: 'Frank Ruhl Libre', serif;
+    direction: rtl;
+    text-align: right;
+  }
+
+  /* Quiet links */
+  a { @apply text-bone-100 transition-colors duration-200; }
+  a:hover { @apply text-ember; }
+
+  /* Scrollbars (webkit) */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(224, 122, 46, 0.18);
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(224, 122, 46, 0.30); }
+
+  /* Selection */
+  ::selection { background: rgba(224, 122, 46, 0.32); color: #fff; }
+}
+
+@layer components {
+  /* Lichen genus dot — used in chips, legends, lists */
+  .lichen-dot {
+    @apply inline-block w-2.5 h-2.5 rounded-full ring-1 ring-black/10;
+  }
+
+  /* Genus chip — small pill with a colored dot */
+  .lichen-chip {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-800 border border-slate-700 text-xs text-bone-200;
+  }
+
+  /* Confidence pill */
+  .confidence-pill {
+    @apply inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium uppercase tracking-wider;
+  }
+  .confidence-high   { @apply bg-emerald-900/40 text-emerald-300 border border-emerald-800/50; }
+  .confidence-medium { @apply bg-amber-900/40  text-amber-300  border border-amber-800/50; }
+  .confidence-low    { @apply bg-rose-900/30  text-rose-300   border border-rose-800/50; }
+  .confidence-unknown{ @apply bg-slate-700/50 text-bone-300   border border-slate-700; }
+
+  /* Stratum bar (left pane row) */
+  .stratum {
+    @apply relative cursor-pointer transition-all duration-300 ease-out;
+  }
+  .stratum:hover { transform: translateX(2px); }
+  .stratum.is-active {
+    @apply bg-slate-750/50;
+  }
+
+  /* Panel surface */
+  .panel {
+    @apply bg-slate-800 border border-slate-700/60 rounded-lg shadow-soft;
+  }
+
+  /* Subtle divider */
+  .hr-soft { @apply h-px bg-slate-700/60 my-6 border-0; }
+}

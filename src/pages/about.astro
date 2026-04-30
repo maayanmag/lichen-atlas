@@ -1,0 +1,53 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="About" description="About the Lichen Atlas project — methodology, references, credits.">
+  <article class="max-w-3xl mx-auto py-12 prose-invert">
+    <p class="text-[11px] uppercase tracking-[0.24em] text-slate-600 mb-4">About</p>
+    <h1>Lichen on Tombstone — חזזית על מצבה</h1>
+
+    <p class="mt-6 text-lg text-bone-200 leading-relaxed">
+      The Lichen Atlas is the public face of an ongoing bio-design research thread at <strong>Bezalel Academy</strong> (M.Des Industrial Design). The thread asks a single question:
+    </p>
+
+    <blockquote class="border-l-2 border-ember pl-6 my-8">
+      <p class="font-serif text-2xl leading-snug text-bone-50">
+        What happens in the top 2 millimetres of memory stone — between preservation and biological erosion — and how can a design intervention address this tension?
+      </p>
+    </blockquote>
+
+    <h2 class="mt-12">Methodology</h2>
+    <p class="mt-4 text-bone-200">
+      Each cemetery is documented by hand, photographed in two passes (full stone + lichen close-ups), and processed through an AI-assisted pipeline that:
+    </p>
+    <ol class="mt-4 space-y-2 text-bone-200">
+      <li>Triages every photo into one of six classes (full stone, close-up, intro, etc.) and clusters them by stone</li>
+      <li>OCRs the inscription, translates it to English and Hebrew, and cross-references the name against the Templer Society registry and other sources</li>
+      <li>Identifies the lichen community in each photo to genus level (sometimes species), with explicit confidence labels</li>
+      <li>Records the result as one <code>DETAILS.md</code> per stone</li>
+    </ol>
+    <p class="mt-4 text-bone-200">
+      The output is intended to be both a <strong>working dataset</strong> for further field research and a <strong>contemplative artefact</strong> — a quiet, browsable record of a forgotten community and the lichens that have outlived it.
+    </p>
+
+    <h2 class="mt-12">Confidence &amp; limits</h2>
+    <p class="mt-4 text-bone-200">
+      Every per-stone biography carries a confidence label and a callout asking for cross-reference against the definitive printed source: <em>Eisler, J. &amp; Gräf, U. (2023). Der historische Friedhof der Tempelgesellschaft in Jerusalem</em>. Lichen IDs default to genus level — species claims are flagged and should be confirmed by microscopy + chemical spot tests.
+    </p>
+
+    <h2 class="mt-12">References</h2>
+    <ul class="mt-4 space-y-2 text-bone-200 text-sm">
+      <li>Galun, M. &amp; Haluwani, M. S. (1977). <em>Lichens on tombstones in Jerusalem: the effect of air pollution and stone properties on species distribution.</em> The Lichenologist 9(2), 177–188.</li>
+      <li>Galun, M. &amp; Mukhtar, A. (1996). <em>Checklist of the Lichens of Israel.</em> Bocconea 6, 149–171.</li>
+      <li>Eisler, J. &amp; Gräf, U. (2023). <em>Der historische Friedhof der Tempelgesellschaft in Jerusalem</em> (vols. 1–2). Verein für Württembergische Kirchengeschichte, Stuttgart.</li>
+      <li>Pinna, D. (2014). <em>Biofilms and lichens on stone monuments.</em> In: Microbial deterioration of stone monuments.</li>
+    </ul>
+
+    <h2 class="mt-12">Credits</h2>
+    <p class="mt-4 text-bone-200">
+      Field photography, research direction &amp; design — <strong>Maayan Magenheim</strong>.<br/>
+      AI-assisted documentation pipeline — built as part of this Bio-Design thread.
+    </p>
+  </article>
+</BaseLayout>

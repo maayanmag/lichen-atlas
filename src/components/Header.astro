@@ -1,0 +1,54 @@
+---
+// Header — quiet top bar with brand + site context
+interface Props {
+  currentSite?: { slug: string; name: string } | null;
+  transparent?: boolean;
+}
+const { currentSite = null, transparent = false } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<header
+  class:list={[
+    'sticky top-0 z-40 w-full backdrop-blur-md transition-colors',
+    transparent ? 'bg-slate-850/30 border-b border-transparent' : 'bg-slate-850/80 border-b border-slate-700/40',
+  ]}
+>
+  <div class="max-w-page mx-auto flex items-center justify-between px-4 md:px-8 h-16">
+    <!-- Brand -->
+    <a href={`${base}/`} class="group flex items-center gap-3">
+      <!-- Tiny mark: a fragment of placodioid rosette -->
+      <svg width="28" height="28" viewBox="0 0 28 28" class="text-ember" aria-hidden="true">
+        <circle cx="14" cy="14" r="11" fill="none" stroke="currentColor" stroke-width="0.7" opacity="0.4"/>
+        <circle cx="14" cy="14" r="6.5" fill="none" stroke="currentColor" stroke-width="1.2"/>
+        <circle cx="14" cy="14" r="2.4" fill="currentColor" opacity="0.85"/>
+        <g stroke="currentColor" stroke-width="0.7" opacity="0.55">
+          <line x1="14" y1="3" x2="14" y2="6.5"/>
+          <line x1="14" y1="21.5" x2="14" y2="25"/>
+          <line x1="3" y1="14" x2="6.5" y2="14"/>
+          <line x1="21.5" y1="14" x2="25" y2="14"/>
+          <line x1="6.2" y1="6.2" x2="8.6" y2="8.6"/>
+          <line x1="19.4" y1="19.4" x2="21.8" y2="21.8"/>
+          <line x1="6.2" y1="21.8" x2="8.6" y2="19.4"/>
+          <line x1="19.4" y1="8.6" x2="21.8" y2="6.2"/>
+        </g>
+      </svg>
+      <div class="flex flex-col leading-none">
+        <span class="font-serif text-lg tracking-tight text-bone-50 group-hover:text-ember transition-colors">Lichen Atlas</span>
+        <span class="text-[10px] uppercase tracking-[0.18em] text-slate-600">field documentation · Bezalel</span>
+      </div>
+    </a>
+
+    <!-- Right: site context + nav -->
+    <nav class="flex items-center gap-2 md:gap-4 text-sm text-bone-200">
+      {currentSite && (
+        <span class="hidden md:inline text-slate-600">·</span>
+        <a href={`${base}/sites/${currentSite.slug}/`} class="hidden md:inline text-bone-200 hover:text-ember">
+          {currentSite.name}
+        </a>
+      )}
+      <a href={`${base}/lichens`} class="hidden sm:inline px-2 py-1 rounded hover:text-ember">Lichens</a>
+      <a href={`${base}/about`}    class="hidden sm:inline px-2 py-1 rounded hover:text-ember">About</a>
+    </nav>
+  </div>
+</header>

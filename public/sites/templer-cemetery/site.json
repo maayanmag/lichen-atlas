@@ -1,0 +1,56 @@
+{
+  "slug": "templer-cemetery",
+  "name": "Templerfriedhof Jerusalem",
+  "subtitle": "Historical Templer Cemetery, German Colony",
+  "location": "Emek Refaim 37, Jerusalem",
+  "founded": 1878,
+  "community": "Tempelgesellschaft (Württemberg Pietist Protestants)",
+  "tagline": "A small enclosed Templer burial ground in the German Colony — the first cemetery documented in this atlas.",
+  "history_md": "Founded by the Tempelgesellschaft in 1878, five years after the German Colony was established (1873). The Templers — a Württemberg Pietist Protestant sect — settled in Jerusalem under Christoph Hoffmann's leadership. The community ended in Palestine by 1948 after British wartime internment and deportation. The cemetery preserves approximately 1,000 burials over three generations.",
+  "stone_count": 24,
+  "photo_count": 107,
+  "identified_count": 18,
+  "unknown_count": 6,
+  "date_range": "1879–1965",
+  "death_year_min": 1879,
+  "death_year_max": 1965,
+  "stone_age": {
+    "oldest": 147,
+    "newest": 61,
+    "median": 123
+  },
+  "lichen_genera": [
+    {
+      "genus": "Caloplaca",
+      "stone_count": 16
+    },
+    {
+      "genus": "Verrucaria",
+      "stone_count": 14
+    },
+    {
+      "genus": "Aspicilia",
+      "stone_count": 12
+    },
+    {
+      "genus": "Candelariella",
+      "stone_count": 7
+    },
+    {
+      "genus": "Lecanora",
+      "stone_count": 4
+    },
+    {
+      "genus": "Bryophyta",
+      "stone_count": 1
+    }
+  ],
+  "confidence_breakdown": {
+    "medium": 11,
+    "unknown": 5,
+    "low": 7,
+    "high": 1
+  },
+  "ingested_at": "2026-04-30 12:41",
+  "source_workspace": "/Users/mmagenheim/Documents/bezalel_projects/bio_design/linches_graves_pics/templer_cemetery/_organized"
+}

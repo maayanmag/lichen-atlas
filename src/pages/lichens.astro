@@ -1,0 +1,82 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { listAllSites, loadStones } from '@/lib/data';
+import { LICHEN_PALETTE, genusInfo } from '@/lib/lichens';
+
+const sites = listAllSites();
+
+// Aggregate genera across all sites
+interface GenusAgg {
+  genus: string;
+  totalStones: number;
+  bySite: Record<string, number>;
+  speciesGuesses: Set<string>;
+}
+const agg: Record<string, GenusAgg> = {};
+
+for (const site of sites) {
+  const stones = loadStones(site.slug);
+  for (const s of stones) {
+    for (const g of s.lichen_genera) {
+      if (!agg[g]) agg[g] = { genus: g, totalStones: 0, bySite: {}, speciesGuesses: new Set() };
+      agg[g].totalStones++;
+      agg[g].bySite[site.slug] = (agg[g].bySite[site.slug] ?? 0) + 1;
+      for (const sp of s.lichen_species) {
+        if (sp.startsWith(g)) agg[g].speciesGuesses.add(sp);
+      }
+    }
+  }
+}
+
+const genera = Object.values(agg).sort((a, b) => b.totalStones - a.totalStones);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<BaseLayout title="Lichens" description="Cross-site lichen taxonomy gallery — Mediterranean calcareous-stone communities documented across all atlas sites.">
+  <article class="max-w-page mx-auto py-12">
+    <p class="text-[11px] uppercase tracking-[0.24em] text-slate-600 mb-4">Cross-site reference</p>
+    <h1>Lichen taxonomy</h1>
+    <p class="mt-4 max-w-2xl text-bone-200 text-lg leading-relaxed">
+      Every genus observed in the atlas, with its canonical color (the same dot you see in stone strata, chips, and biodiversity bars). Identification is genus-level by default; species-level guesses are listed where morphology was unambiguous.
+    </p>
+
+    <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
+      {genera.map(g => {
+        const info = genusInfo(g.genus);
+        return (
+          <section class="panel p-6">
+            <header class="flex items-center justify-between mb-3">
+              <div class="flex items-center gap-3">
+                <span class="w-4 h-4 rounded-full ring-1 ring-white/10" style={`background: ${info.color}`} />
+                <h3 class="italic">{g.genus}</h3>
+              </div>
+              <span class="text-xs text-slate-600 tabular-nums">{g.totalStones} stones</span>
+            </header>
+            <p class="text-sm text-bone-200 leading-relaxed">{info.description}</p>
+            {g.speciesGuesses.size > 0 && (
+              <>
+                <hr class="hr-soft" />
+                <p class="text-[11px] uppercase tracking-wider text-slate-600 mb-2">Species guesses observed</p>
+                <ul class="text-sm text-bone-200 space-y-1">
+                  {Array.from(g.speciesGuesses).sort().map(sp => <li class="italic">{sp}</li>)}
+                </ul>
+              </>
+            )}
+            <div class="mt-4 pt-3 border-t border-slate-700/40 text-xs text-slate-600 flex items-center gap-3 flex-wrap">
+              <span class="uppercase tracking-wider">By site:</span>
+              {Object.entries(g.bySite).map(([slug, n]) => (
+                <a class="text-bone-200 hover:text-ember" href={`${base}/sites/${slug}/`}>{slug} <span class="text-slate-600 tabular-nums">{n}</span></a>
+              ))}
+            </div>
+          </section>
+        );
+      })}
+    </div>
+
+    <hr class="hr-soft mt-12" />
+
+    <div class="mt-8 text-sm text-slate-600 max-w-3xl">
+      <p>The community profile is consistent with Galun &amp; Haluwani (1977), <em>Lichens on tombstones in Jerusalem</em>: the dominant trio of <em class="text-bone-200">Caloplaca + Aspicilia + Verrucaria</em> with sub-dominant <em class="text-bone-200">Lecanora</em>, <em class="text-bone-200">Candelariella</em> and occasional foliose <em class="text-bone-200">Xanthoria</em>. Genus-level identification from photographs is reliable for distinctive morphologies; species-level requires microscopy and chemical spot tests (K, C, KC, P, UV).</p>
+    </div>
+  </article>
+</BaseLayout>
