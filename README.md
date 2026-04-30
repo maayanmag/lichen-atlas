@@ -1,5 +1,7 @@
 # 🪦 Lichen Atlas
 
+**🌐 Live demo: <https://maayanmag.github.io/lichen-atlas/>**
+
 > **🚧 Work in progress** — this is an early prototype of the explorer for an ongoing field-research project. Data, taxonomy IDs, and biographies are AI-assisted and subject to verification (see *Methodology & Limits*). Don't cite anything from here without cross-referencing the printed sources.
 
 A multi-site web atlas of lichens colonizing historical cemeteries — Bezalel Bio-Design / Maayan Magenheim.
