@@ -51,6 +51,12 @@
     @apply text-bone-50 leading-tight tracking-wide;
   }
 
+  /* Hebrew body font — Frank Ruhl Libre is loaded in BaseLayout */
+  .font-hebrew {
+    font-family: 'Frank Ruhl Libre', 'Newsreader', serif;
+    font-feature-settings: "kern";
+  }
+
   .text-hebrew {
     font-family: 'Frank Ruhl Libre', serif;
     direction: rtl;
@@ -99,6 +105,7 @@
     @apply relative cursor-pointer transition-all duration-300 ease-out;
   }
   .stratum:hover { transform: translateX(2px); }
+  [dir="rtl"] .stratum:hover { transform: translateX(-2px); }
   .stratum.is-active {
     @apply bg-slate-750/50;
   }
