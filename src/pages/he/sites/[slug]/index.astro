@@ -1,0 +1,65 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import StratigraphyExplorer from '@/components/StratigraphyExplorer.tsx';
+import { listSiteSlugs, loadSite, loadStones } from '@/lib/data';
+import { EXPLORER_KEYS, t, tBag } from '@/lib/strings';
+
+export async function getStaticPaths() {
+  return listSiteSlugs().map(slug => ({ params: { slug } }));
+}
+
+const locale = 'he' as const;
+const { slug } = Astro.params;
+const site = loadSite(slug as string, locale);
+const stones = loadStones(slug as string, locale);
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+const tStrings = tBag(EXPLORER_KEYS, locale);
+---
+
+<BaseLayout
+  title={site.name}
+  description={site.tagline ?? site.subtitle}
+  currentSite={{ slug: site.slug, name: site.name }}
+  locale={locale}
+  bleed
+>
+  <section class="border-b border-slate-700/40 bg-slate-850/60">
+    <div class="max-w-page mx-auto px-4 md:px-8 py-8 md:py-10 grid md:grid-cols-[2fr_1fr] gap-8 items-end">
+      <div>
+        <p class="text-[10px] uppercase tracking-[0.2em] text-slate-600 mb-2">
+          {t('site.eyebrow.foundedPrefix', locale)} {site.founded ?? '—'}
+        </p>
+        <h1 class="font-serif">{site.name}</h1>
+        {site.subtitle && <p class="text-bone-300 mt-1">{site.subtitle}</p>}
+        <p class="text-sm text-slate-600 mt-2">{site.location}</p>
+      </div>
+      <dl class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-2 gap-x-4 gap-y-3 text-sm">
+        <div>
+          <dt class="text-[10px] uppercase tracking-wider text-slate-600">{t('site.dl.stones', locale)}</dt>
+          <dd class="font-serif text-2xl text-bone-50">{site.stone_count}</dd>
+        </div>
+        <div>
+          <dt class="text-[10px] uppercase tracking-wider text-slate-600">{t('site.dl.photos', locale)}</dt>
+          <dd class="font-serif text-2xl text-bone-50">{site.photo_count}</dd>
+        </div>
+        <div>
+          <dt class="text-[10px] uppercase tracking-wider text-slate-600">{t('site.dl.range', locale)}</dt>
+          <dd class="font-serif text-lg text-bone-100 tabular-nums">{site.date_range}</dd>
+        </div>
+        <div>
+          <dt class="text-[10px] uppercase tracking-wider text-slate-600">{t('site.dl.stoneAgeOldest', locale)}</dt>
+          <dd class="font-serif text-lg text-bone-100 tabular-nums">
+            {site.stone_age?.oldest ? `${site.stone_age.oldest} ${t('site.dl.years.suffix', locale)}` : '—'}
+          </dd>
+        </div>
+      </dl>
+    </div>
+    {site.tagline && (
+      <div class="max-w-page mx-auto px-4 md:px-8 pb-6">
+        <p class="text-bone-200 max-w-3xl text-base md:text-lg leading-relaxed">{site.tagline}</p>
+      </div>
+    )}
+  </section>
+
+  <StratigraphyExplorer client:load site={site} stones={stones} baseUrl={baseUrl} locale={locale} t={tStrings} />
+</BaseLayout>

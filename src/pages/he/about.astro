@@ -1,0 +1,50 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { t } from '@/lib/strings';
+
+const locale = 'he' as const;
+---
+
+<BaseLayout title={t('about.title', locale)} description={t('about.intro', locale)} locale={locale}>
+  <article class="max-w-3xl mx-auto py-12 prose-invert">
+    <p class="text-[11px] uppercase tracking-[0.24em] text-slate-600 mb-4">{t('about.eyebrow', locale)}</p>
+    <h1>{t('about.title', locale)}</h1>
+
+    <p class="mt-6 text-lg text-bone-200 leading-relaxed">{t('about.intro', locale)}</p>
+
+    <blockquote class="border-e-2 border-ember pe-6 my-8">
+      <p class="font-serif text-2xl leading-snug text-bone-50">
+        {t('about.question', locale)}
+      </p>
+    </blockquote>
+
+    <h2 class="mt-12">{t('about.methodology.title', locale)}</h2>
+    <p class="mt-4 text-bone-200">{t('about.methodology.intro', locale)}</p>
+    <ol class="mt-4 space-y-2 text-bone-200 ps-6 list-decimal">
+      <li>{t('about.methodology.s1', locale)}</li>
+      <li>{t('about.methodology.s2', locale)}</li>
+      <li>{t('about.methodology.s3', locale)}</li>
+      <li>{t('about.methodology.s4', locale)}</li>
+    </ol>
+    <p class="mt-4 text-bone-200">
+      {t('about.methodology.outro.lead', locale)} <strong>{t('about.methodology.outro.workingDataset', locale)}</strong> {t('about.methodology.outro.mid', locale)} <strong>{t('about.methodology.outro.contemplative', locale)}</strong> {t('about.methodology.outro.tail', locale)}
+    </p>
+
+    <h2 class="mt-12">{t('about.confidence.title', locale)}</h2>
+    <p class="mt-4 text-bone-200">{t('about.confidence.body', locale)}</p>
+
+    <h2 class="mt-12">{t('about.references.title', locale)}</h2>
+    <ul class="mt-4 space-y-2 text-bone-200 text-sm ps-6 list-disc">
+      <li><span dir="ltr">Galun, M. &amp; Haluwani, M. S. (1977). <em>Lichens on tombstones in Jerusalem: the effect of air pollution and stone properties on species distribution.</em> The Lichenologist 9(2), 177–188.</span></li>
+      <li><span dir="ltr">Galun, M. &amp; Mukhtar, A. (1996). <em>Checklist of the Lichens of Israel.</em> Bocconea 6, 149–171.</span></li>
+      <li><span dir="ltr">Eisler, J. &amp; Gräf, U. (2023). <em>Der historische Friedhof der Tempelgesellschaft in Jerusalem</em> (vols. 1–2). Verein für Württembergische Kirchengeschichte, Stuttgart.</span></li>
+      <li><span dir="ltr">Pinna, D. (2014). <em>Biofilms and lichens on stone monuments.</em> In: Microbial deterioration of stone monuments.</span></li>
+    </ul>
+
+    <h2 class="mt-12">{t('about.credits.title', locale)}</h2>
+    <p class="mt-4 text-bone-200">
+      {t('about.credits.line1.lead', locale)} <strong>{t('about.credits.line1.name', locale)}</strong>.<br/>
+      {t('about.credits.line2', locale)}
+    </p>
+  </article>
+</BaseLayout>

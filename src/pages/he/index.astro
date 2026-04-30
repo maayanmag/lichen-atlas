@@ -1,0 +1,86 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { t } from '@/lib/strings';
+
+const locale = 'he' as const;
+
+let sites: Array<any> = [];
+try {
+  const fs = await import('node:fs');
+  const path = await import('node:path');
+  const url = await import('node:url');
+  const here = path.dirname(url.fileURLToPath(import.meta.url));
+  // we sit at src/pages/he/index.astro → public/sites is ../../../public/sites
+  const sitesDir = path.resolve(here, '../../../public/sites');
+  if (fs.existsSync(sitesDir)) {
+    for (const slug of fs.readdirSync(sitesDir).sort()) {
+      const enFile = path.join(sitesDir, slug, 'site.json');
+      if (!fs.existsSync(enFile)) continue;
+      const en = JSON.parse(fs.readFileSync(enFile, 'utf-8'));
+      const heFile = path.join(sitesDir, slug, 'site.he.json');
+      const he = fs.existsSync(heFile) ? JSON.parse(fs.readFileSync(heFile, 'utf-8')) : {};
+      sites.push({ slug, ...en, ...he });
+    }
+  }
+} catch (e) {
+  console.warn('No sites discovered yet:', e);
+}
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<BaseLayout title={t('brand.title', locale)} transparentHeader bleed locale={locale}>
+  <section class="relative overflow-hidden">
+    <div class="absolute inset-0 -z-10">
+      <div class="absolute inset-0 bg-gradient-to-b from-transparent via-slate-850/0 to-slate-850"></div>
+      <div class="absolute inset-0 opacity-40 mix-blend-screen"
+           style="background: radial-gradient(circle at 80% 0%, rgba(224,122,46,0.18), transparent 55%), radial-gradient(circle at 20% 30%, rgba(157,166,126,0.10), transparent 50%);"></div>
+    </div>
+
+    <div class="max-w-page mx-auto px-4 md:px-8 pt-32 pb-24 md:pt-44 md:pb-36">
+      <p class="text-[11px] uppercase tracking-[0.24em] text-slate-600 mb-6">{t('home.eyebrow', locale)}</p>
+      <h1 class="font-serif text-bone-50 max-w-4xl">
+        {t('home.title.lead', locale)} <span class="text-ember">{t('home.title.sep', locale)}</span> {t('home.title.tail', locale)}
+      </h1>
+      <p class="mt-8 max-w-2xl text-lg leading-relaxed text-bone-200">{t('home.lede', locale)}</p>
+      <p class="mt-3 max-w-2xl text-sm text-slate-600">
+        {t('home.attribution.prefix', locale)} <a href="https://bezalel.ac.il" class="underline-offset-2 underline decoration-dotted hover:text-ember">{t('home.attribution.school', locale)}</a>{t('home.attribution.suffix', locale)}
+      </p>
+    </div>
+  </section>
+
+  <section class="max-w-page mx-auto px-4 md:px-8 pb-24">
+    <div class="flex items-end justify-between mb-8">
+      <h2>{t('home.sites.heading', locale)}</h2>
+      <span class="text-xs text-slate-600 uppercase tracking-wider">{sites.length} {sites.length === 1 ? t('home.sites.count.suffix.one', locale) : t('home.sites.count.suffix.many', locale)}</span>
+    </div>
+
+    {sites.length === 0 && (
+      <div class="panel p-8 text-bone-200">
+        <p>{t('home.sites.empty', locale)} <code class="text-ember">{t('home.sites.empty.cmd', locale)}</code> {t('home.sites.empty.tail', locale)}</p>
+      </div>
+    )}
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {sites.map((s: any) => (
+        <a href={`${base}/he/sites/${s.slug}/`} class="group panel p-6 hover:border-ember/40 transition-colors">
+          <div class="flex items-baseline justify-between mb-3">
+            <h3 class="group-hover:text-ember transition-colors">{s.name}</h3>
+            <span class="text-xs text-slate-600">{s.location ?? '—'}</span>
+          </div>
+          <p class="text-sm text-bone-200 mb-4">{s.tagline ?? s.description ?? ''}</p>
+          <div class="flex items-center gap-4 text-xs text-slate-600">
+            <span><span class="text-bone-200">{s.stone_count ?? '?'}</span> {t('home.sites.stones', locale)}</span>
+            <span><span class="text-bone-200">{s.photo_count ?? '?'}</span> {t('home.sites.photos', locale)}</span>
+            {s.date_range && <span>{s.date_range}</span>}
+          </div>
+        </a>
+      ))}
+
+      <div class="panel p-6 border-dashed opacity-60">
+        <h3 class="text-bone-300">{t('home.sites.future.title', locale)}</h3>
+        <p class="text-sm text-slate-600 mt-2">{t('home.sites.future.body', locale)}</p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

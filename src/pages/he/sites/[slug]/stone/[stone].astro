@@ -1,0 +1,41 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import StratigraphyExplorer from '@/components/StratigraphyExplorer.tsx';
+import { listSiteSlugs, loadSite, loadStones } from '@/lib/data';
+import { EXPLORER_KEYS, t, tBag } from '@/lib/strings';
+
+export async function getStaticPaths() {
+  const paths = [];
+  for (const slug of listSiteSlugs()) {
+    const stones = loadStones(slug, 'he');
+    for (const s of stones) {
+      paths.push({ params: { slug, stone: s.folder } });
+    }
+  }
+  return paths;
+}
+
+const locale = 'he' as const;
+const { slug, stone: stoneFolder } = Astro.params;
+const site = loadSite(slug as string, locale);
+const stones = loadStones(slug as string, locale);
+const stone = stones.find(s => s.folder === stoneFolder);
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+const tStrings = tBag(EXPLORER_KEYS, locale);
+
+if (!stone) throw new Error(`Stone not found: ${stoneFolder}`);
+
+const personLabel = stone.is_unknown
+  ? t('explorer.unknownStone', locale)
+  : `${stone.surname}${stone.given_names ? ', ' + stone.given_names : ''}`;
+---
+
+<BaseLayout
+  title={`${personLabel} — ${site.name}`}
+  description={`${stone.born ? t('detail.born.short', locale) + ' ' + stone.born : ''}${stone.died ? ' ' + t('detail.died.short', locale) + ' ' + stone.died : ''}. ${stone.lichen_genera.join(', ')}.`}
+  currentSite={{ slug: site.slug, name: site.name }}
+  locale={locale}
+  bleed
+>
+  <StratigraphyExplorer client:load site={site} stones={stones} baseUrl={baseUrl} initialStone={stone.folder} locale={locale} t={tStrings} />
+</BaseLayout>
