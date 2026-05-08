@@ -35,6 +35,7 @@ PUBLIC = REPO_ROOT / "public"
 # Default source paths per known site slug
 DEFAULT_SOURCES = {
     "templer-cemetery": Path("/Users/mmagenheim/Documents/bezalel_projects/bio_design/linches_graves_pics/templer_cemetery/_organized"),
+    "pardes-hahaim": Path("/Users/mmagenheim/Documents/bezalel_projects/bio_design/linches_graves_pics/Pardes HaHaim/_organized"),
 }
 
 # Default site-level descriptors (extend as more cemeteries come in)
@@ -53,6 +54,28 @@ SITE_PROFILES = {
             "by 1948 after British wartime internment and deportation. The cemetery preserves "
             "approximately 1,000 burials over three generations."
         ),
+        "verify_source_en": "Cross-reference against Eisler & Gräf (2023) Der historische Friedhof der Tempelgesellschaft in Jerusalem.",
+        "verify_source_he": "יש להצליב מול Eisler & Gräf (2023) Der historische Friedhof der Tempelgesellschaft in Jerusalem.",
+    },
+    "pardes-hahaim": {
+        "name": "Pardes HaHaim",
+        "subtitle": "Municipal cemetery, Kfar Saba (founded 2006)",
+        "location": "Ha'Pardes Street, Kfar Saba, Sharon region",
+        "founded": 2006,
+        "community": "Israeli Jewish (municipal — Kfar Saba Chevra Kadisha)",
+        "tagline": "A young, green municipal cemetery — the colonisation-onset counterpoint to Jerusalem's century-old stones.",
+        "history_md": (
+            "Pardes HaHaim (פרדס החיים — \"Orchard of Life\") opened for burial in 2006 to "
+            "relieve burial pressure across the Sharon region. Operated jointly by the Kfar "
+            "Saba municipality and the local Chevra Kadisha, it is built as a deliberately "
+            "modern, accessible, green burial ground — wide shaded paths, irrigated native "
+            "vegetation, marble and granite headstones rather than weathered limestone. For "
+            "this atlas it is the experimental short-time control: a substrate that has had "
+            "less than two decades to be re-written by lichen, photographed alongside the "
+            "Templer site whose stones have stood for a century and a half."
+        ),
+        "verify_source_en": "Cross-reference against the Kfar Saba Chevra Kadisha registry and family records — no academic publication exists for this site.",
+        "verify_source_he": "יש להצליב מול רישומי החברא קדישא כפר סבא ורשומות משפחה — לא קיים מקור אקדמי לאתר זה.",
     },
 }
 

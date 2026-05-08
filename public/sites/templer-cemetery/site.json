@@ -7,6 +7,8 @@
   "community": "Tempelgesellschaft (Württemberg Pietist Protestants)",
   "tagline": "A small enclosed Templer burial ground in the German Colony — the first cemetery documented in this atlas.",
   "history_md": "Founded by the Tempelgesellschaft in 1878, five years after the German Colony was established (1873). The Templers — a Württemberg Pietist Protestant sect — settled in Jerusalem under Christoph Hoffmann's leadership. The community ended in Palestine by 1948 after British wartime internment and deportation. The cemetery preserves approximately 1,000 burials over three generations.",
+  "verify_source_en": "Cross-reference against Eisler & Gräf (2023) Der historische Friedhof der Tempelgesellschaft in Jerusalem.",
+  "verify_source_he": "יש להצליב מול Eisler & Gräf (2023) Der historische Friedhof der Tempelgesellschaft in Jerusalem.",
   "stone_count": 24,
   "photo_count": 107,
   "identified_count": 18,
@@ -51,6 +53,6 @@
     "low": 7,
     "high": 1
   },
-  "ingested_at": "2026-04-30 12:41",
+  "ingested_at": "2026-05-08 17:32",
   "source_workspace": "/Users/mmagenheim/Documents/bezalel_projects/bio_design/linches_graves_pics/templer_cemetery/_organized"
 }

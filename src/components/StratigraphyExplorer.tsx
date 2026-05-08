@@ -31,7 +31,7 @@ export default function StratigraphyExplorer({ site, stones, baseUrl, initialSto
   const [confidenceFilter, setConfidenceFilter] = useState<Set<BioConfidence>>(new Set(['high','medium','low','unknown']));
   const [photoIdx, setPhotoIdx] = useState(0);
   const [tab, setTab] = useState<'inscription' | 'biography' | 'lichens' | 'photos'>('inscription');
-  const [lang, setLang] = useState<'en' | 'he' | 'de'>(isHe ? 'he' : 'en');
+  const [lang, setLang] = useState<InscriptionLang>(isHe ? 'he' : 'en');
 
   // Hash-driven deep linking
   useEffect(() => {
@@ -285,13 +285,21 @@ interface DetailProps {
   setPhotoIdx: (n: number) => void;
   tab: 'inscription' | 'biography' | 'lichens' | 'photos';
   setTab: (t: 'inscription' | 'biography' | 'lichens' | 'photos') => void;
-  lang: 'en' | 'he' | 'de';
-  setLang: (l: 'en' | 'he' | 'de') => void;
+  lang: InscriptionLang;
+  setLang: (l: InscriptionLang) => void;
   locale: Locale;
   t: Record<string, string>;
 }
 
+type InscriptionLang = 'en' | 'he' | 'de' | 'pt' | 'latin';
+
+/** Display priority for the language tabs. Originals first (he, de, pt),
+ *  then translations/aids (en, latin). */
+const LANG_PRIORITY: readonly InscriptionLang[] = ['he', 'de', 'pt', 'en', 'latin'] as const;
+const RTL_LANGS: ReadonlySet<InscriptionLang> = new Set<InscriptionLang>(['he']);
+
 function DetailPane({ stone, site, baseUrl, photoIdx, setPhotoIdx, tab, setTab, lang, setLang, locale, t }: DetailProps) {
+  const isHe = locale === 'he';
   const allPhotos = [...stone.photos.full, ...stone.photos.closeups];
   const safeIdx = Math.min(photoIdx, allPhotos.length - 1);
   const currentPhoto = allPhotos[safeIdx];
@@ -306,11 +314,36 @@ function DetailPane({ stone, site, baseUrl, photoIdx, setPhotoIdx, tab, setTab, 
     lichens:     t['detail.tab.lichens'],
     photos:      t['detail.tab.photos'],
   };
-  const langLabels: Record<DetailProps['lang'], string> = {
-    en: t['detail.lang.en'],
-    de: t['detail.lang.de'],
-    he: t['detail.lang.he'],
+  const langLabels: Record<InscriptionLang, string> = {
+    en:    t['detail.lang.en'],
+    de:    t['detail.lang.de'],
+    he:    t['detail.lang.he'],
+    pt:    t['detail.lang.pt'],
+    latin: t['detail.lang.latin'],
   };
+
+  // Compute which language tabs actually have content for THIS stone.
+  const sectionByLang: Record<InscriptionLang, string> = {
+    en:    sections.inscription_en,
+    de:    sections.inscription_de,
+    he:    sections.inscription_he,
+    pt:    sections.inscription_pt,
+    latin: sections.inscription_latin,
+  };
+  const availableLangs = LANG_PRIORITY.filter(l => sectionByLang[l]?.trim());
+
+  // Clamp `lang` to an available choice when the stone changes — pick the
+  // UI-locale's language if available, otherwise the first original.
+  useEffect(() => {
+    if (availableLangs.length === 0) return;
+    if (!availableLangs.includes(lang)) {
+      const preferred: InscriptionLang | undefined =
+        availableLangs.includes(locale === 'he' ? 'he' : 'en')
+          ? (locale === 'he' ? 'he' : 'en')
+          : availableLangs[0];
+      if (preferred) setLang(preferred);
+    }
+  }, [stone.folder, availableLangs.join(',')]);
 
   return (
     <div className="max-w-3xl mx-auto px-6 md:px-10 py-8">
@@ -402,19 +435,22 @@ function DetailPane({ stone, site, baseUrl, photoIdx, setPhotoIdx, tab, setTab, 
       <div>
         {tab === 'inscription' && (
           <div>
-            {/* Language toggle (inscription language — independent of UI locale) */}
-            <div className="flex items-center gap-1 mb-4 text-xs">
-              <span className="text-slate-600 me-1 uppercase tracking-wider">{t['detail.readIn']}</span>
-              {(['en','de','he'] as const).map(l => (
-                <button key={l} onClick={() => setLang(l)}
-                        className={`px-2 py-0.5 rounded ${lang === l ? 'bg-ember/15 text-ember' : 'text-bone-300 hover:bg-slate-700/40'}`}>
-                  {langLabels[l]}
-                </button>
-              ))}
-            </div>
+            {/* Language toggle (inscription language — independent of UI locale)
+                Only languages with actual content for this stone are shown. */}
+            {availableLangs.length > 1 && (
+              <div className="flex items-center gap-1 mb-4 text-xs flex-wrap">
+                <span className="text-slate-600 me-1 uppercase tracking-wider">{t['detail.readIn']}</span>
+                {availableLangs.map(l => (
+                  <button key={l} onClick={() => setLang(l)}
+                          className={`px-2 py-0.5 rounded ${lang === l ? 'bg-ember/15 text-ember' : 'text-bone-300 hover:bg-slate-700/40'}`}>
+                    {langLabels[l]}
+                  </button>
+                ))}
+              </div>
+            )}
 
-            <div className={`whitespace-pre-line ${lang === 'he' ? 'font-hebrew text-right text-lg' : 'font-serif text-lg'} text-bone-100 leading-snug`} dir={lang === 'he' ? 'rtl' : 'ltr'}>
-              {(lang === 'de' ? sections.inscription_de : lang === 'he' ? sections.inscription_he : sections.inscription_en) || <span className="text-slate-600 italic">{t['detail.inscription.empty']}</span>}
+            <div className={`whitespace-pre-line ${RTL_LANGS.has(lang) ? 'font-hebrew text-right text-lg' : (lang === 'latin' ? 'font-mono text-base text-bone-200 italic' : 'font-serif text-lg')} text-bone-100 leading-snug`} dir={RTL_LANGS.has(lang) ? 'rtl' : 'ltr'}>
+              {sectionByLang[lang] || <span className="text-slate-600 italic">{t['detail.inscription.empty']}</span>}
             </div>
             {stone.biblical_reference && (
               <p className="text-xs text-slate-600 italic mt-4">— {stone.biblical_reference}</p>
@@ -481,7 +517,12 @@ function DetailPane({ stone, site, baseUrl, photoIdx, setPhotoIdx, tab, setTab, 
       {/* Stone-type / verify footer */}
       <footer className="mt-8 pt-6 border-t border-slate-700/40 text-xs text-slate-600 space-y-2">
         {stone.stone_type && <p><span className="text-bone-300">{t['detail.stone.label']}</span> {stone.stone_type}</p>}
-        <p><span className="text-bone-300">{t['detail.verify.label']}</span> {t['detail.verify.body']}</p>
+        {(() => {
+          const verifyBody = (isHe ? site.verify_source_he : site.verify_source_en) || t['detail.verify.body'];
+          return verifyBody ? (
+            <p><span className="text-bone-300">{t['detail.verify.label']}</span> {verifyBody}</p>
+          ) : null;
+        })()}
         <p className="font-mono">{stone.folder}</p>
       </footer>
     </div>
@@ -498,19 +539,48 @@ interface Sections {
   inscription_de: string;
   inscription_en: string;
   inscription_he: string;
+  inscription_pt: string;
+  inscription_latin: string;
   biography: string;
   lichens: string;
 }
 
+/** Pattern for matching inscription section headings to a language bucket.
+ *  Order matters — more specific patterns must come first.
+ *  - Bare "### Original Inscription" (no language hint) falls back to German
+ *    for backward compatibility with the Templer DETAILS.md template, where
+ *    the original was always German. New per-site templates should always
+ *    declare the language explicitly: e.g. "### Original Inscription (Hebrew)". */
+const INSCRIPTION_HEADING_PATTERNS: ReadonlyArray<readonly [RegExp, InscriptionLang]> = [
+  [/^####?\s+Original\s+Inscription\s*\(.*Hebrew.*\)/i,                                'he'],
+  [/^####?\s+Original\s+Inscription\s*\(.*German.*\)/i,                                'de'],
+  [/^####?\s+Original\s+Inscription\s*\(.*Portuguese.*\)/i,                            'pt'],
+  [/^####?\s+Original\s+Inscription\s*\(.*(Latin|English).*\)/i,                       'en'],
+  [/^####?\s+Hebrew\s+Translation/i,                                                   'he'],
+  [/^####?\s+English\s+Translation/i,                                                  'en'],
+  [/^####?\s+Portuguese\s+Translation/i,                                               'pt'],
+  [/^####?\s+German\s+Translation/i,                                                   'de'],
+  [/^####?\s+Latin\s+Transliteration/i,                                                'latin'],
+  [/^####?\s+Transliteration/i,                                                        'latin'],
+  [/^####?\s+Original\s+Inscription(?!\s*\()/i,                                        'de'],
+];
+
+const SEPARATOR = '\n\n— — —\n\n';
+
 /** Extract themed sections out of a DETAILS.md body. The DETAILS.md template
  *  has fairly stable headings — but agents wrote slight variations.
- *  This is a best-effort extractor. */
+ *  Multiple inscription sections in the same language (e.g. headstone +
+ *  grave-bed, or left + right panel) are concatenated with a SEPARATOR. */
 function extractSections(md: string): Sections {
-  const out: Sections = { inscription_de: '', inscription_en: '', inscription_he: '', biography: '', lichens: '' };
+  const out: Sections = {
+    inscription_de: '', inscription_en: '', inscription_he: '',
+    inscription_pt: '', inscription_latin: '',
+    biography: '', lichens: '',
+  };
   if (!md) return out;
   const lines = md.split('\n');
 
-  // Helper: extract content between two heading patterns.
+  // Helper: extract content between two heading patterns (single-shot — first match).
   const extractBetween = (startRe: RegExp, endRes: RegExp[]): string => {
     let i = 0;
     for (; i < lines.length; i++) if (startRe.test(lines[i])) break;
@@ -520,21 +590,46 @@ function extractSections(md: string): Sections {
     for (let j = start; j < lines.length; j++) {
       if (endRes.some(r => r.test(lines[j]))) { end = j; break; }
     }
-    // Strip leading blank lines
     return lines.slice(start, end).join('\n').trim();
+  };
+
+  // Extract all fenced code blocks from a substring, joined with the separator.
+  const extractAllFencedBlocks = (src: string): string => {
+    const matches = [...src.matchAll(/```[^\n]*\n([\s\S]*?)```/g)];
+    if (matches.length === 0) return src.trim();
+    return matches.map(m => m[1].trim()).join(SEPARATOR);
   };
 
   const sectionEndRe = /^#{2,4}\s+/;
 
-  // Inscriptions are typically in fenced code blocks under "### Original Inscription" / "### English Translation" / "### Hebrew Translation"
-  const extractFencedBlock = (src: string): string => {
-    const m = src.match(/```[^\n]*\n([\s\S]*?)```/);
-    return m ? m[1].trim() : src.trim();
+  const langBuckets: Record<InscriptionLang, string[]> = {
+    en: [], de: [], he: [], pt: [], latin: [],
   };
 
-  out.inscription_de = extractFencedBlock(extractBetween(/^####?\s+Original\s+Inscription/i, [sectionEndRe]));
-  out.inscription_en = extractFencedBlock(extractBetween(/^####?\s+English\s+Translation/i, [sectionEndRe]));
-  out.inscription_he = extractFencedBlock(extractBetween(/^####?\s+Hebrew\s+Translation/i, [sectionEndRe]));
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    let matchedLang: InscriptionLang | null = null;
+    for (const [re, lang] of INSCRIPTION_HEADING_PATTERNS) {
+      if (re.test(line)) { matchedLang = lang; break; }
+    }
+    if (!matchedLang) continue;
+
+    let end = lines.length;
+    for (let j = i + 1; j < lines.length; j++) {
+      if (sectionEndRe.test(lines[j])) { end = j; break; }
+    }
+    const body = lines.slice(i + 1, end).join('\n');
+    const block = extractAllFencedBlocks(body);
+    if (block) langBuckets[matchedLang].push(block);
+    i = end - 1;
+  }
+
+  out.inscription_en    = langBuckets.en.join(SEPARATOR);
+  out.inscription_de    = langBuckets.de.join(SEPARATOR);
+  out.inscription_he    = langBuckets.he.join(SEPARATOR);
+  out.inscription_pt    = langBuckets.pt.join(SEPARATOR);
+  out.inscription_latin = langBuckets.latin.join(SEPARATOR);
+
   out.biography = extractBetween(/^####?\s+Biographical\s+context/i, [sectionEndRe, /^---/]);
   out.lichens = extractBetween(/^##\s+🦠?\s*Lichen\s+Analysis/i, [/^##\s+🔄/, /^##\s+/, /^---/]);
 

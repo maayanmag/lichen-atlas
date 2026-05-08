@@ -60,6 +60,8 @@ export interface Site {
   community?: string;
   tagline?: string;
   history_md?: string;
+  verify_source_en?: string;
+  verify_source_he?: string;
 
   stone_count: number;
   photo_count: number;

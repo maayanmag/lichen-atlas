@@ -8,7 +8,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "ingest": "python3 scripts/ingest_site.py",
-    "ingest:templer": "python3 scripts/ingest_site.py --site templer-cemetery"
+    "ingest:templer": "python3 scripts/ingest_site.py --site templer-cemetery",
+    "ingest:pardes-hahaim": "python3 scripts/ingest_site.py --site pardes-hahaim"
   },
   "dependencies": {
     "@astrojs/react": "^4.4.0",

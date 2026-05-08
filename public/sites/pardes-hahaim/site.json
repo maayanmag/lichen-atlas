@@ -1,0 +1,46 @@
+{
+  "slug": "pardes-hahaim",
+  "name": "Pardes HaHaim",
+  "subtitle": "Municipal cemetery, Kfar Saba (founded 2006)",
+  "location": "Ha'Pardes Street, Kfar Saba, Sharon region",
+  "founded": 2006,
+  "community": "Israeli Jewish (municipal — Kfar Saba Chevra Kadisha)",
+  "tagline": "A young, green municipal cemetery — the colonisation-onset counterpoint to Jerusalem's century-old stones.",
+  "history_md": "Pardes HaHaim (פרדס החיים — \"Orchard of Life\") opened for burial in 2006 to relieve burial pressure across the Sharon region. Operated jointly by the Kfar Saba municipality and the local Chevra Kadisha, it is built as a deliberately modern, accessible, green burial ground — wide shaded paths, irrigated native vegetation, marble and granite headstones rather than weathered limestone. For this atlas it is the experimental short-time control: a substrate that has had less than two decades to be re-written by lichen, photographed alongside the Templer site whose stones have stood for a century and a half.",
+  "verify_source_en": "Cross-reference against the Kfar Saba Chevra Kadisha registry and family records — no academic publication exists for this site.",
+  "verify_source_he": "יש להצליב מול רישומי החברא קדישא כפר סבא ורשומות משפחה — לא קיים מקור אקדמי לאתר זה.",
+  "stone_count": 13,
+  "photo_count": 36,
+  "identified_count": 12,
+  "unknown_count": 1,
+  "date_range": "2007–2018",
+  "death_year_min": 2007,
+  "death_year_max": 2018,
+  "stone_age": {
+    "oldest": 19,
+    "newest": 8,
+    "median": 12
+  },
+  "lichen_genera": [
+    {
+      "genus": "Caloplaca",
+      "stone_count": 10
+    },
+    {
+      "genus": "Verrucaria-like",
+      "stone_count": 1
+    },
+    {
+      "genus": "(unidentified",
+      "stone_count": 1
+    }
+  ],
+  "confidence_breakdown": {
+    "low": 7,
+    "medium": 4,
+    "very-low": 1,
+    "low-medium": 1
+  },
+  "ingested_at": "2026-05-08 17:32",
+  "source_workspace": "/Users/mmagenheim/Documents/bezalel_projects/bio_design/linches_graves_pics/Pardes HaHaim/_organized"
+}
