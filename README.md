@@ -102,15 +102,54 @@ npm run preview
 
 ## Adding a new cemetery site
 
+The easiest way is the **local editor** (see below) — but you can also do it by hand:
+
 1. Run the upstream documentation pipeline on the new cemetery's photos to produce a `_organized/` folder (with per-stone subfolders containing DETAILS.md + _meta.json + photos)
 2. Run the ingest:
    ```bash
    python3 scripts/ingest_site.py --site my-new-site --source /path/to/_organized
    ```
-3. Optionally extend `SITE_PROFILES` in `scripts/ingest_site.py` with the cemetery's name, location, founded year, history paragraph, and tagline
+3. Register the cemetery's name, location, founded year, history paragraph, and tagline — either in `scripts/sites_registry.json` (data-driven, preferred) or by extending `SITE_PROFILES` in `scripts/ingest_site.py`
 4. Rebuild: `npm run build`
 
 The site picker on `/` will automatically include the new site.
+
+## ✏️ Adding graves with the local Editor (private, not deployed)
+
+The public atlas is a **static** site, so the published URL is inherently
+**view-only** — there is no backend in production that could accept edits. To add
+content there is a small **local editor** that runs only on your machine and is
+never deployed:
+
+```bash
+npm run admin
+# → opens the editor at:
+#   http://localhost:4455/
+```
+
+Open that URL in your browser. The editor lets you:
+
+- **Add a grave** to any existing site (inscriptions, biography, lichen analysis,
+  dates, and full-stone + close-up photo uploads), and
+- **Create a new cemetery on the fly** — if the grave belongs to a site that isn't
+  in the atlas yet, switch to *➕ New site* and fill in its name, location, history,
+  etc. (English, with optional Hebrew fields).
+
+On **Save**, the editor:
+
+1. writes the canonical source files (`_organized/<Stone>/_meta.json` + `DETAILS.md` + the photos),
+2. registers any new site in [`scripts/sites_registry.json`](scripts/sites_registry.json) (so `ingest_site.py` finds it without code changes),
+3. runs `ingest_site.py` to regenerate `public/sites/<slug>/`, and
+4. writes optional Hebrew overlays (`site.he.json` / `stones.he.json`).
+
+Then review on the dev server (`npm run dev`) and **commit + push** to publish. The
+GitHub Pages site updates — and stays view-only, because the editor never ships
+with it.
+
+> **Security model:** the editor binds to `127.0.0.1` only, so it is reachable
+> from your own machine and is never deployed with the static site. A brand-new
+> site may need a dev-server restart before its page appears (Astro caches
+> `getStaticPaths` in dev).
 
 ## Visual language
 

@@ -27,6 +27,10 @@ __pycache__/
 .venv/
 venv/
 
+# Local editor (scripts/admin_server.py) — photo upload staging dir.
+scripts/.admin_staging/
+scripts/.admin_token
+
 # Generated site bundles — these are built from the project workspace by ingest_site.py
 # They land in public/sites/<slug>/ and SHOULD be committed if you want the static deploy
 # to work; uncomment the next line if you want to keep them out of git instead.

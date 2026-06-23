@@ -1,0 +1,4 @@
+{
+  "_README": "Data-driven site registry. The local editor (scripts/admin_server.py) appends sites here so new cemeteries can be added WITHOUT editing ingest_site.py. Each entry under 'sites' is keyed by slug and shaped { source: absolute path to the site's _organized/ folder, profile: { name, subtitle, location, founded?, community, tagline, history_md, verify_source_en, verify_source_he } }. Registry entries override the hard-coded defaults in ingest_site.py. This file is safe to hand-edit.",
+  "sites": {}
+}
