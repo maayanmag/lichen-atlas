@@ -1,0 +1,50 @@
+{
+  "slug": "cascais",
+  "name": "Cemitério da Guia, Cascais",
+  "subtitle": "Municipal cemetery on the Atlantic coast, Cascais, Portugal",
+  "location": "Rua da Torre, Guia, Cascais e Estoril, Portugal",
+  "community": "Portuguese Catholic (municipal — Câmara Municipal de Cascais)",
+  "tagline": "The atlas's first site outside Israel — an Atlantic-coast Portuguese cemetery whose 1920s–1960s limestone tombs are being re-written by a yellow Candelariella–Aspicilia community.",
+  "history_md": "The Cemitério Municipal da Guia is one of the municipal cemeteries of Cascais, on the Atlantic coast west of Lisbon, beside the Farol da Guia and the Boca do Inferno. It grew with the town across the nineteenth and twentieth centuries, as Cascais turned from a fishing village into the preferred seaside resort of the Portuguese royal family and elite. The stones photographed here date from 1921 to 1960 — pale limestone (lioz) family chapels and recumbent ledger slabs, several already declared ABANDONADO (abandoned) by the municipality. For this atlas Cascais is the first oceanic-climate, non-Israeli site: a maritime Atlantic counterpoint to the hot, dry Mediterranean limestone of the Jerusalem Templer cemetery and to the young, irrigated Kfar Saba ground — and the place where a yellow Candelariella community, rather than the orange Caloplaca of Jerusalem, leads the colonisation.",
+  "verify_source_en": "Cross-reference against the Câmara Municipal de Cascais cemetery registry (e.g. Edital 434/2021) and Find a Grave — Cemitério da Guia. No academic publication documents this cemetery.",
+  "verify_source_he": "יש להצליב מול רישומי בית הקברות של עיריית קשקאיש (Câmara Municipal de Cascais; למשל Edital 434/2021) ומול Find a Grave — Cemitério da Guia. לא קיים מקור אקדמי המתעד את בית הקברות הזה.",
+  "stone_count": 3,
+  "photo_count": 12,
+  "identified_count": 3,
+  "unknown_count": 0,
+  "date_range": "1921–1948",
+  "death_year_min": 1921,
+  "death_year_max": 1948,
+  "stone_age": {
+    "oldest": 105,
+    "newest": 78,
+    "median": 82
+  },
+  "lichen_genera": [
+    {
+      "genus": "Aspicilia",
+      "stone_count": 3
+    },
+    {
+      "genus": "Candelariella",
+      "stone_count": 3
+    },
+    {
+      "genus": "Verrucaria",
+      "stone_count": 3
+    },
+    {
+      "genus": "Lecanora",
+      "stone_count": 1
+    },
+    {
+      "genus": "Caloplaca",
+      "stone_count": 1
+    }
+  ],
+  "confidence_breakdown": {
+    "medium": 3
+  },
+  "ingested_at": "2026-06-22 23:31",
+  "source_workspace": "/Users/mmagenheim/Documents/bezalel_projects/bio_design/linches_graves_pics/Cascais Portugal/_organized"
+}

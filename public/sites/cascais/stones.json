@@ -1,0 +1,140 @@
+[
+  {
+    "folder": "Carvalho_Family_Chapel_1921",
+    "is_unknown": false,
+    "surname": "de Carvalho",
+    "given_names": "Sofia Magna Alves",
+    "maiden_name": "",
+    "born": "",
+    "born_year": null,
+    "died": "1921-01-23",
+    "died_year": 1921,
+    "age_at_death": null,
+    "stone_age_2026": 105,
+    "bio_confidence": "medium",
+    "stone_type": "Private family chapel-tomb (jazigo particular tipo capela) of pale Portuguese limestone (lioz) with carved Art-Deco/neoclassical relief mouldings and a Greek-key (meander) base motif",
+    "inscription_language": "Portuguese",
+    "lichen_genera": [
+      "Aspicilia",
+      "Candelariella",
+      "Lecanora",
+      "Verrucaria"
+    ],
+    "lichen_species": [
+      "Aspicilia calcarea",
+      "Candelariella aurella",
+      "Lecanora albescens",
+      "Verrucaria nigrescens"
+    ],
+    "lichen_dominant": "Candelariella",
+    "lichen_coverage_low": 40,
+    "lichen_coverage_high": 60,
+    "lichen_coverage_label": "40-60",
+    "photos": {
+      "full": [
+        "cascais_chapel_full.jpeg"
+      ],
+      "closeups": [
+        "cascais_chapel_lichen1.jpeg",
+        "cascais_chapel_lichen2.jpeg",
+        "cascais_chapel_lichen3.jpeg",
+        "cascais_chapel_relief.jpeg",
+        "cascais_chapel_lichen4.jpeg"
+      ]
+    },
+    "photo_count": 6,
+    "biblical_reference": null,
+    "details_md": "# Carvalho_Family_Chapel_1921\n\n> 📷 **Photos in this folder**: 6 files — 1 full-structure shot + 5 lichen close-ups\n> 🗓️ **Captured**: 17 May 2026, ~16:48\n> 📍 **Site**: Cemitério Municipal da Guia, Cascais e Estoril, Portugal\n\n---\n\n## 🪦 Gravestone Identification\n\n### Original Inscription (Portuguese)\n```\nCASCAIS                                   ABANDONADO\nEDITAL 434/2021\nJAZIGO PARTICULAR TIPO CAPELA EM ESTADO DE ABANDONO\n(CEMITÉRIO MUNICIPAL DA GUIA-CASCAIS)\n\nJazigo particular tipo capela n.º 33\nSituado na Secção A-Talhão 3\n\nCONCESSIONÁRIO: Maria da Conceição Laiola de Carvalho\nÚLTIMO CONCESSIONÁRIO CONHECIDO: Desconhecidos\nSofia Magna Alves de Carvalho .......... 23-01-1921\nMaria da Conceição Laiola de Carvalho .. 30-04-1960\n```\n\n### English Translation\n```\nCASCAIS                                   ABANDONED\nPUBLIC NOTICE 434/2021\nPRIVATE CHAPEL-TYPE FAMILY TOMB IN A STATE OF ABANDONMENT\n(GUIA-CASCAIS MUNICIPAL CEMETERY)\n\nPrivate chapel-type tomb no. 33\nLocated in Section A — Plot 3\n\nCONCESSION-HOLDER: Maria da Conceição Laiola de Carvalho\nLAST KNOWN HOLDER: Unknown\nSofia Magna Alves de Carvalho .......... 23 Jan 1921\nMaria da Conceição Laiola de Carvalho .. 30 Apr 1960\n```\n*(The \"inscription\" on this stone is no longer an epitaph but a municipal notice. A printed* **ABANDONADO** *seal has been pasted to the chapel: under Edital 434/2021 the Câmara Municipal de Cascais declared the tomb abandoned — needing repair, unmaintained for ≥10 years, the holder unreachable by post — and gave heirs 60 days to come forward.)*\n\n### Identification\n\n| Field | Value |\n|---|---|\n| **Tomb** | Jazigo particular tipo capela n.º 33 (Section A, Plot 3) |\n| **Surname** | de Carvalho |\n| **Concession-holder** | Maria da Conceição Laiola de Carvalho |\n| **Interred (1)** | Sofia Magna Alves de Carvalho — d. 23.01.1921 |\n| **Interred (2)** | Maria da Conceição Laiola de Carvalho — d. 30.04.1960 |\n| **Stone age (as of 2026)** | ~105 years (from earliest burial, 1921) |\n| **Structure** | Limestone (lioz) family chapel-tomb with carved relief |\n| **Inscription language** | Portuguese |\n\n#### Biographical context\nThe Carvalho chapel (jazigo particular tipo capela n.º 33) stands in Section A of the Cemitério Municipal da Guia, the municipal cemetery on the Atlantic coast of Cascais, beside the Farol da Guia and the Boca do Inferno. It is a small private mausoleum of pale Portuguese limestone (lioz), with carved Art-Deco / neoclassical relief mouldings and a Greek-key (meander) motif around its base — typical of well-to-do Portuguese family tombs of the early twentieth century. Two burials are recorded on the municipal notice: Sofia Magna Alves de Carvalho (died 23 January 1921) and Maria da Conceição Laiola de Carvalho (died 30 April 1960), the registered concession-holder. In 2021 the city declared the chapel **ABANDONADO** — abandoned: structurally in need of repair, unmaintained for at least a decade, the family no longer reachable by post. For this atlas the stone is therefore a double document of abandonment: the human family has withdrawn, and in their absence a second tenant — a yellow-and-grey lichen community — has taken over the surface and begun to re-inscribe it.\n\n**Confidence**: `medium`\n- Names, dates, tomb number and section are read directly from the municipal Edital photographed on the chapel itself. No genealogical cross-reference has been made; the relationship between Sofia (1921) and Maria (1960) is inferred (likely mother/daughter or close kin sharing the family tomb) but not confirmed.\n\n> [!todo] Verify against authoritative source\n> Cross-reference with the **Câmara Municipal de Cascais** cemetery registry (Edital 434/2021 and the Secção/Talhão concession records) and with **Find a Grave — Cemitério da Guia**. No academic publication documents this cemetery.\n\n---\n\n## 🦠 Lichen Analysis\n\n### Photos analyzed\n- cascais_chapel_full.jpeg — pilaster of the chapel carrying the ABANDONADO notice; overview of substrate and weathering\n- cascais_chapel_lichen1.jpeg — golden-yellow granular crust against a white-grey crustose face\n- cascais_chapel_lichen2.jpeg — yellow lichen concentrated as a band along a vertical arris\n- cascais_chapel_lichen3.jpeg — three-species pioneer mosaic on a flat ashlar face\n- cascais_chapel_relief.jpeg — carved relief moulding with lichen tracing the grooves\n- cascais_chapel_lichen4.jpeg — discrete white rosettes, black perithecia and yellow granules on a flat face\n\n### Stone substrate\n- **Material**: Pale Portuguese limestone (lioz) — a hard, fine creamy-grey calcareous freestone widely used in Lisbon-region monuments; calcareous substrate favouring a calcicolous (lime-loving) lichen flora.\n- **Surface condition**: Moderately to heavily weathered; vertical faces colonised; carved mouldings and arrises carry the heaviest, most continuous growth.\n- **Aspect**: Multiple vertical aspects on the chapel's pilasters and panels; sheltered carved recesses retain moisture longer than flat faces.\n\n### Lichen community observed\n\n#### Lichen #1 — bright yellow granular crust\n- **Colour**: Egg-yolk to golden yellow\n- **Thallus type**: Granular-crustose (not lobed at the margin)\n- **Growth pattern**: Continuous bands and patches concentrated along vertical arrises and inside carved relief grooves where run-off water and nutrients accumulate\n- **Approx. coverage**: Dominant where present — ~60–80% along edges and relief\n- **Likely genus**: **_Candelariella_** (likely _C. aurella_)\n- **Confidence**: `medium–high`\n- **Reasoning**: Bright egg-yolk-yellow, finely granular, non-lobed crust on calcareous stone with a clear preference for water-tracks and edges is classic _Candelariella_. The granular (rather than placodioid/lobed) texture distinguishes it from the orange, lobe-margined _Caloplaca_ that dominates the Jerusalem site.\n\n#### Lichen #2 — white-grey crustose rosettes\n- **Colour**: Chalky white to pale grey\n- **Thallus type**: Crustose, areolate, discrete rounded patches\n- **Growth pattern**: Scattered discrete cushions on flat faces, locally coalescing\n- **Approx. coverage**: ~20–35% of flat faces\n- **Likely genus**: **_Aspicilia_** (_A. calcarea_) and/or **_Lecanora_** (_L. albescens_)\n- **Confidence**: `low–medium`\n- **Reasoning**: Discrete chalky-white areolate rosettes on limestone are the standard _Aspicilia calcarea_ / _Lecanora albescens_ background of calcicolous communities; species separation needs apothecial detail not resolved in these photos.\n\n#### Lichen #3 — black endolithic crust\n- **Colour**: Black to dark grey\n- **Thallus type**: Endolithic / very thin crustose with pin-point perithecia\n- **Growth pattern**: Diffuse background staining and discrete black dots between the white and yellow thalli\n- **Approx. coverage**: ~15–25%, as background\n- **Likely genus**: **_Verrucaria_** (_V. nigrescens_)\n- **Confidence**: `medium`\n- **Reasoning**: Black, at-or-below-surface crust with perithecial dots on limestone is the textbook _Verrucaria nigrescens_ signature; it forms the dark matrix against which the yellow and white species stand out.\n\n### Ecology & interpretation\n- The community is a **calcicolous pioneer mosaic** — _Candelariella_ + _Aspicilia_/_Lecanora_ + _Verrucaria_ — typical of exposed limestone monuments in the Atlantic-Mediterranean transition of coastal Portugal.\n- Strong **edge- and relief-tropism**: the yellow _Candelariella_ traces exactly the carved mouldings and arrises, because those geometries channel and retain rainwater. The result is that the human ornament is re-drawn in living lichen — the central conceptual image of this atlas (\"the living inscription\").\n- _Candelariella_ dominance (rather than _Caloplaca_, as in Jerusalem) is the clearest **biogeographic contrast** in the atlas so far: a cooler, wetter, more maritime Atlantic exposure versus the hot dry Mediterranean limestone of the Templer cemetery.\n- The municipal **abandonment** (no cleaning, no maintenance) is precisely what lets the lichen community mature undisturbed — neglect of the human record is colonisation of the lichen record.\n\n### Uncertainty notes\n> [!warning] Limits of photo-only identification\n> Photo-based identification is reliable only to genus for distinctive species. _Candelariella aurella_, _Aspicilia calcarea_, _Lecanora albescens_ and _Verrucaria nigrescens_ are best-effort visual matches to the expected coastal-Portuguese calcicolous community; confirmation requires microscopy and chemical spot tests (K, C, KC, P, UV).\n\n---\n\n## 🔄 Cross-references\n- Neighbouring stones at this site: [[Lopes_Jose_Augusto_1948/DETAILS]], [[Custela_Gomes_Jose_1944/DETAILS]]\n- Site context: Cemitério Municipal da Guia, Cascais — the atlas's first site outside Israel (Atlantic-coast counterpoint to the Mediterranean Templer cemetery and the young Kfar Saba cemetery).\n",
+    "notable": "Jazigo particular tipo capela n.º 33, Secção A-Talhão 3, Cemitério Municipal da Guia (Cascais). Declared ABANDONADO (abandoned) by Câmara Municipal de Cascais Edital 434/2021: the chapel needs repair, the title-holder could not be reached by post, and no maintenance had been carried out for at least 10 years, so heirs were given 60 days to come forward. Concessionária: Maria da Conceição Laiola de Carvalho. Two burials recorded on the public notice: Sofia Magna Alves de Carvalho (23-01-1921) and Maria da Conceição Laiola de Carvalho (30-04-1960). Stone age is taken from the earliest recorded burial (1921), when the chapel surface was most likely created.",
+    "tempelgesellschaft_registry_id": null
+  },
+  {
+    "folder": "Custela_Gomes_Jose_1944",
+    "is_unknown": false,
+    "surname": "Custela Gomes",
+    "given_names": "José G.",
+    "maiden_name": "",
+    "born": "1922",
+    "born_year": 1922,
+    "died": "1944-08-07",
+    "died_year": 1944,
+    "age_at_death": 22,
+    "stone_age_2026": 82,
+    "bio_confidence": "medium",
+    "stone_type": "Upright headstone (campa de cabeceira) with an inset oval ceramic photo-portrait, paired with a recumbent grey-limestone ledger slab carrying an incised epitaph poem",
+    "inscription_language": "Portuguese",
+    "lichen_genera": [
+      "Aspicilia",
+      "Caloplaca",
+      "Candelariella",
+      "Verrucaria"
+    ],
+    "lichen_species": [
+      "Aspicilia calcarea",
+      "Caloplaca flavescens",
+      "Verrucaria nigrescens"
+    ],
+    "lichen_dominant": "Aspicilia",
+    "lichen_coverage_low": 50,
+    "lichen_coverage_high": 70,
+    "lichen_coverage_label": "50-70",
+    "photos": {
+      "full": [
+        "cascais_custela_headstone.jpeg",
+        "cascais_custela_epitaph.jpeg"
+      ],
+      "closeups": [
+        "cascais_custela_lichen1.jpeg",
+        "cascais_custela_lichen2.jpeg"
+      ]
+    },
+    "photo_count": 4,
+    "biblical_reference": null,
+    "details_md": "# Custela_Gomes_Jose_1944\n\n> 📷 **Photos in this folder**: 4 files — 2 full shots (headstone + epitaph slab) + 2 lichen close-ups\n> 🗓️ **Captured**: 17 May 2026, ~16:50–16:51\n> 📍 **Site**: Cemitério Municipal da Guia, Cascais e Estoril, Portugal\n\n---\n\n## 🪦 Gravestone Identification\n\n### Original Inscription (Portuguese)\n```\n[Headstone, with an inset oval ceramic photo-portrait of a young man]\n\nÀ MEMÓRIA\nDE\nJOSÉ G. CUSTELA GOMES\nHOMENAGEM DUM\nGRUPO DE AMIGOS\n21-?-1922 — 7-8-1944\n\n[Recumbent slab — the mother's epitaph]\n\nAQUI REPOUSA MEU SAUDOSO FILHO\n[QUE] CRIADO EM VIDA TANTO AMEI\nQUANDO DEUS FINDAR MEUS DIAS\nTAMBÉM AQUI REPOUSAREI\n```\n\n### English Translation\n```\n[Headstone]\n\nTO THE MEMORY\nOF\nJOSÉ G. CUSTELA GOMES\nA TRIBUTE FROM\nA GROUP OF FRIENDS\n21-?-1922 — 7 Aug 1944\n\n[Recumbent slab — the mother's epitaph]\n\nHERE RESTS MY BELOVED SON,\nWHOM, RAISED IN LIFE, I SO LOVED;\nWHEN GOD BRINGS MY DAYS TO AN END,\nI TOO SHALL REST HERE.\n```\n*(The headstone carries an inset oval ceramic photo-portrait of a young man. The dedication \"Homenagem dum grupo de amigos\" — a tribute from a group of friends — and a grieving mother's first-person epitaph on the slab together make this the most personal stone of the three.)*\n\n### Identification\n\n| Field | Value |\n|---|---|\n| **Surname** | Custela Gomes |\n| **Given name** | José G. |\n| **Born** | 1922 (day 21, month uncertain) |\n| **Died** | 7 August 1944 |\n| **Age at death** | ~22 |\n| **Stone age (as of 2026)** | ~82 years (since 1944) |\n| **Stone type** | Upright headstone w/ ceramic portrait + recumbent epitaph slab |\n| **Inscription language** | Portuguese |\n\n#### Biographical context\nJosé G. Custela Gomes (1922–1944) died at about twenty-two and is commemorated by an upright headstone bearing an inset oval **ceramic photo-portrait** of a young man, dedicated \"Homenagem dum grupo de amigos\" — a tribute paid by a group of his friends. The accompanying recumbent slab carries a first-person epitaph in his mother's voice: *\"Aqui repousa meu saudoso filho … quando Deus findar meus dias, também aqui repousarei\"* — \"Here rests my beloved son … when God ends my days, I too shall rest here.\" He died on 7 August 1944; Portugal was neutral in the Second World War, so an ordinary early death (illness or accident) is far more likely than any war cause. The grave lies in the Cemitério Municipal da Guia on the Atlantic coast of Cascais. For this atlas the stone is the most affecting instance of its central theme: a face fixed in glazed ceramic and a mother's words cut in limestone, both now being slowly overgrown — the densest lichen cover of the three Cascais stones.\n\n**Confidence**: `medium`\n- Name, dedication, both dates and the epitaph are read directly from the two stones; the ceramic portrait survives. The birth month is illegible in the photograph (the day reads 21, the year 1922). No external archive has been consulted.\n\n> [!todo] Verify against authoritative source\n> Cross-reference with the **Câmara Municipal de Cascais** cemetery registry and with **Find a Grave — Cemitério da Guia**. The surname \"Custela Gomes\" and the 1944 date should be searchable in local records. No academic publication documents this cemetery.\n\n---\n\n## 🦠 Lichen Analysis\n\n### Photos analyzed\n- cascais_custela_headstone.jpeg — upright headstone with ceramic portrait and dedication\n- cascais_custela_epitaph.jpeg — recumbent slab carrying the mother's incised epitaph, partly overgrown\n- cascais_custela_lichen1.jpeg — foot of the slab: white rosettes with orange placodes over a grey background\n- cascais_custela_lichen2.jpeg — dense, near-coalescing white-grey rosette carpet at a slab corner\n\n### Stone substrate\n- **Material**: Grey limestone (headstone and recumbent slab); calcareous, calcicolous flora.\n- **Surface condition**: Heavily weathered and the most densely colonised of the three Cascais stones; the incised epitaph is being progressively obscured by lichen.\n- **Aspect**: Horizontal recumbent slab (full exposure) plus the vertical headstone faces.\n\n### Lichen community observed\n\n#### Lichen #1 — white-grey areolate rosettes (dominant)\n- **Colour**: Chalky white to pale grey\n- **Thallus type**: Crustose, areolate, discrete-to-coalescing rosettes\n- **Growth pattern**: A dense, near-continuous carpet of rounded patches across the slab, locally merging into a mosaic\n- **Approx. coverage**: ~50–60% — the dominant element\n- **Likely genus**: **_Aspicilia_** (_A. calcarea_), with possible **_Lecanora_**\n- **Confidence**: `medium`\n- **Reasoning**: Dense white-grey areolate rosettes coalescing into a cracked mosaic on flat limestone are the classic mature _Aspicilia calcarea_ stand; the higher coverage here (versus the Lopes slab) is consistent with a slightly older, undisturbed surface.\n\n#### Lichen #2 — orange placodes\n- **Colour**: Orange to ochre-orange\n- **Thallus type**: Crustose, discrete rounded placodes\n- **Growth pattern**: Scattered among the white rosettes\n- **Approx. coverage**: ~10–15%\n- **Likely genus**: **_Caloplaca_** (e.g. _C. flavescens_), with diffuse **_Candelariella_**\n- **Confidence**: `low–medium`\n- **Reasoning**: Discrete orange patches set within the white community indicate a _Caloplaca_ presence here that is far less prominent than at the Jerusalem site; a paler ochre wash between them suggests granular _Candelariella_ as well.\n\n#### Lichen #3 — grey endolithic background\n- **Colour**: Grey to dark grey\n- **Thallus type**: Endolithic / thin crustose, with dark dots\n- **Likely genus**: **_Verrucaria_** (_V. nigrescens_)\n- **Confidence**: `low–medium`\n\n### Ecology & interpretation\n- The richest and most advanced community of the three Cascais stones: dominant white _Aspicilia_ with subordinate orange _Caloplaca_, ochre _Candelariella_ and a grey _Verrucaria_ matrix.\n- The lichen is **overwriting the epitaph**: cascais_custela_epitaph.jpeg shows the incised mother's-voice text increasingly hard to read beneath the rosette carpet — the literal enactment of the \"living inscription\" idea, here at its most poignant because the text being erased is a mother's grief.\n- Compared within the site, this stone (1944, recumbent, heavily colonised) brackets the Lopes slab (1948, recumbent, lightly colonised) and the chapel (1921, vertical, _Candelariella_-edged): three points that begin to separate **age, aspect and surface geometry** as drivers of colonisation.\n\n### Uncertainty notes\n> [!warning] Limits of photo-only identification\n> Genus-level identifications (_Aspicilia_, _Caloplaca_, _Candelariella_, _Verrucaria_) are best-effort visual matches to the expected coastal-Portuguese calcicolous community. Species names are provisional and require microscopy and chemical spot tests (K, C, KC, P, UV) to confirm.\n\n---\n\n## 🔄 Cross-references\n- Neighbouring stones at this site: [[Carvalho_Family_Chapel_1921/DETAILS]], [[Lopes_Jose_Augusto_1948/DETAILS]]\n- Site context: Cemitério Municipal da Guia, Cascais — Atlantic-coast counterpoint to the Mediterranean Templer cemetery and the young Kfar Saba cemetery.\n",
+    "notable": "Headstone inscription: 'À MEMÓRIA DE JOSÉ G. CUSTELA GOMES / HOMENAGEM DUM GRUPO DE AMIGOS / 21-?-1922 – 7-8-1944' with an inset oval ceramic photo-portrait of a young man. Birth day reads 21 (month uncertain) 1922; died 7 August 1944, aged ~22. The recumbent slab carries a mother's epitaph: 'AQUI REPOUSA MEU SAUDOSO FILHO ... CRIADO EM VIDA TANTO AMEI / QUANDO DEUS FINDAR MEUS DIAS / TAMBÉM AQUI REPOUSAREI' ('Here rests my beloved son ... whom in life I so loved; when God ends my days, I too shall rest here'). 'Homenagem dum grupo de amigos' (a tribute from a group of friends) suggests a young man mourned widely. Cemitério Municipal da Guia, Cascais; dates read directly from the stone, no external archival source.",
+    "tempelgesellschaft_registry_id": null
+  },
+  {
+    "folder": "Lopes_Jose_Augusto_1948",
+    "is_unknown": false,
+    "surname": "Lopes",
+    "given_names": "José Augusto Luís",
+    "maiden_name": "",
+    "born": "1917",
+    "born_year": 1917,
+    "died": "1948",
+    "died_year": 1948,
+    "age_at_death": 31,
+    "stone_age_2026": 78,
+    "bio_confidence": "medium",
+    "stone_type": "Recumbent ledger slab (laje/campa rasa) of grey limestone with gold-painted incised lettering, an upright crucifix at the head and wrought-iron flower-holders",
+    "inscription_language": "Portuguese",
+    "lichen_genera": [
+      "Aspicilia",
+      "Candelariella",
+      "Verrucaria"
+    ],
+    "lichen_species": [
+      "Aspicilia calcarea",
+      "Candelariella aurella",
+      "Verrucaria nigrescens"
+    ],
+    "lichen_dominant": "Aspicilia",
+    "lichen_coverage_low": 30,
+    "lichen_coverage_high": 50,
+    "lichen_coverage_label": "30-50",
+    "photos": {
+      "full": [
+        "cascais_lopes_full.jpeg"
+      ],
+      "closeups": [
+        "cascais_lopes_lichen1.jpeg"
+      ]
+    },
+    "photo_count": 2,
+    "biblical_reference": null,
+    "details_md": "# Lopes_Jose_Augusto_1948\n\n> 📷 **Photos in this folder**: 2 files — 1 full-slab shot + 1 lichen close-up\n> 🗓️ **Captured**: 17 May 2026, ~16:49\n> 📍 **Site**: Cemitério Municipal da Guia, Cascais e Estoril, Portugal\n\n---\n\n## 🪦 Gravestone Identification\n\n### Original Inscription (Portuguese)\n```\nÀ MEMÓRIA\nDE\nJOSÉ AUGUSTO\nLUIS LOPES\n1917 — 1948\n```\n\n### English Translation\n```\nTO THE MEMORY\nOF\nJOSÉ AUGUSTO\nLUIS LOPES\n1917 — 1948\n```\n\n### Identification\n\n| Field | Value |\n|---|---|\n| **Surname** | Lopes |\n| **Given names** | José Augusto Luís |\n| **Born** | 1917 |\n| **Died** | 1948 |\n| **Age at death** | ~31 |\n| **Stone age (as of 2026)** | ~78 years (since 1948) |\n| **Stone type** | Recumbent ledger slab + upright crucifix |\n| **Inscription language** | Portuguese |\n\n#### Biographical context\nJosé Augusto Luís Lopes (1917–1948) is commemorated by a recumbent ledger slab (laje / campa rasa) of grey limestone, its gold-painted incised lettering still legible, with a small upright crucifix at the head and a pair of wrought-iron flower-holders. He died young, at about thirty-one. The grave lies in the Cemitério Municipal da Guia, the early-twentieth-century municipal cemetery serving Cascais and Estoril on the Atlantic coast west of Lisbon. Nothing beyond the name and the two dates is recorded on the stone, and no external archive has been consulted; the slab is included here primarily as a **mid-century, horizontal, fully sun- and rain-exposed limestone surface** — a useful microhabitat contrast to the vertical faces of the Carvalho chapel and to the more heavily colonised Custela Gomes slab a few metres away.\n\n**Confidence**: `medium`\n- Name and dates are read directly and clearly from the incised, gold-filled inscription. No genealogical or archival cross-reference has been attempted.\n\n> [!todo] Verify against authoritative source\n> Cross-reference with the **Câmara Municipal de Cascais** cemetery registry and with **Find a Grave — Cemitério da Guia**. No academic publication documents this cemetery.\n\n---\n\n## 🦠 Lichen Analysis\n\n### Photos analyzed\n- cascais_lopes_full.jpeg — full recumbent slab with crucifix, inscription and iron flower-holders\n- cascais_lopes_lichen1.jpeg — slab surface close-up: white areolate cushions over a grey-ochre background\n\n### Stone substrate\n- **Material**: Grey limestone ledger slab (calcareous, calcicolous flora expected).\n- **Surface condition**: Moderately weathered; a flat, horizontal, fully exposed surface (maximum sun, rain and dust deposition).\n- **Aspect**: Horizontal / recumbent — receives direct sun and pooled rainfall, unlike the vertical chapel faces.\n\n### Lichen community observed\n\n#### Lichen #1 — white-grey areolate cushions\n- **Colour**: Chalky white to pale grey\n- **Thallus type**: Crustose, areolate (\"honeycomb\"), discrete rounded cushions\n- **Growth pattern**: Scattered discrete patches ~5–20 mm across the slab face\n- **Approx. coverage**: ~20–35%, the dominant element\n- **Likely genus**: **_Aspicilia_** (_A. calcarea_)\n- **Confidence**: `medium`\n- **Reasoning**: Discrete white-grey areolate cushions cracked into a mosaic on flat calcareous stone are the classic _Aspicilia calcarea_ morphology; it is the characteristic pioneer of horizontal limestone ledgers.\n\n#### Lichen #2 — yellow-ochre granular wash\n- **Colour**: Pale yellow to ochre\n- **Thallus type**: Thin granular crust / diffuse film\n- **Growth pattern**: Diffuse staining and scattered granules between the white cushions\n- **Approx. coverage**: ~10–20%\n- **Likely genus**: **_Candelariella_**\n- **Confidence**: `low`\n- **Reasoning**: The diffuse yellow-ochre tint matches the granular _Candelariella_ seen heavily on the neighbouring chapel; here it is reduced to a thin wash, consistent with the younger, flatter, more frequently sun-baked surface.\n\n#### Lichen #3 — grey endolithic background\n- **Colour**: Grey to dark grey\n- **Thallus type**: Endolithic / thin crustose\n- **Growth pattern**: Background matrix\n- **Likely genus**: **_Verrucaria_** (_V. nigrescens_)\n- **Confidence**: `low–medium`\n\n### Ecology & interpretation\n- The slab shows the same calcicolous community as the rest of the site but at **lower coverage** and dominated by white _Aspicilia_ rather than yellow _Candelariella_ — consistent with a younger (1948) and flatter, more sun-exposed surface than the older chapel.\n- As a horizontal ledger it is a good **microhabitat control**: same cemetery, same stone type, same climate, but a recumbent rather than vertical aspect — letting aspect be compared against the vertical chapel and the (older, more colonised) Custela Gomes pairing.\n\n### Uncertainty notes\n> [!warning] Limits of photo-only identification\n> Only two photographs are available for this stone, both of the slab face. Genus-level identifications (_Aspicilia_, _Candelariella_, _Verrucaria_) are best-effort visual matches; species confirmation requires microscopy and chemical spot tests.\n\n---\n\n## 🔄 Cross-references\n- Neighbouring stones at this site: [[Carvalho_Family_Chapel_1921/DETAILS]], [[Custela_Gomes_Jose_1944/DETAILS]]\n- Site context: Cemitério Municipal da Guia, Cascais — Atlantic-coast counterpoint to the Mediterranean Templer cemetery and the young Kfar Saba cemetery.\n",
+    "notable": "Inscription legible in the field photograph: 'À MEMÓRIA DE JOSÉ AUGUSTO LUIS LOPES 1917 – 1948'. Died young (~31). Recumbent slab in the Cemitério Municipal da Guia, Cascais; no external archival source consulted — dates read directly from the stone.",
+    "tempelgesellschaft_registry_id": null
+  }
+]
